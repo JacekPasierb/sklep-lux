@@ -1,0 +1,208 @@
+.section {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.contentWrapper {
+  
+ 
+  border-bottom-width: 1px;
+  border-bottom-color: #afafaf;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  padding-left: 0%;
+  display: flex;
+  position: relative;
+}
+
+.contentWrapper.flexDirection {
+  
+  flex-flow: row;
+}
+.leftWrapper {
+  width: 50%;
+  padding-left: 2%;
+}
+
+.rightWrapper {
+  grid-column-gap: 0rem;
+  grid-row-gap: 0.1rem;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 50%;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  display: flex;
+  position: relative;
+}
+
+.stickyContentWrapper {
+  height: 40vh;
+  position: sticky;
+  top: 15vh;
+}
+.stickyNavWrapper {
+  grid-column-gap: 4%;
+  grid-row-gap: 4%;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 60px;
+  max-height: 90px;
+  margin-top: 2rem;
+  padding-left: 0%;
+  padding-right: 2%;
+  display: flex;
+}
+
+.navLine {
+  background-color: #f5f5f5;
+  width: 2px;
+  height: 100%;
+  position: relative;
+}
+
+.navLineLinkWrapper {
+  flex-flow: column;
+  display: flex;
+}
+
+.navLineOrange {
+  background-color: grey;
+  width: 2px;
+  height: 20px;
+}
+.navLineActive {
+  background-color: black; /* Zmieniamy kolor na czarny, gdy aktywna sekcja */
+}
+
+.navLineLink {
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
+  max-height: 30px;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-decoration: none;
+  display: flex;
+}
+
+.numberMenu {
+  color: black;
+  padding-left: 5px;
+  font-family: "Be Inbox 677 E 4 A 86490 Ea", Arial, sans-serif;
+
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.h2 {
+  color: black;
+  font-family: Neuehaasdisplay, Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.imgwrapper {
+  height: 35rem;
+}
+
+.paralaxWrapper {
+  
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.contentImg {
+  object-fit: cover;
+  object-position: 65% 50%;
+  
+  
+  
+  width: 100%;
+  height: 115%;
+}
+
+.cardContent {
+  padding: 2rem;
+
+  color: #333;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  /* transition: all 0.3s ease; */
+  opacity: 0;
+  transform: translateY(20px);  /* Początkowe przesunięcie */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;  /* Delikatne przejście */
+}
+
+.cardContent.visible {
+    opacity: 1;
+    transform: translateY(0);  /* Zmiana przesunięcia na 0 */
+  }
+  
+
+
+
+.cardContent .paragraph {
+  font-family: "Neuehaasdisplay", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 0.5rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.cardContent .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #c29d5d;
+  
+    display: inline-block;
+  }
+  
+  .cardContent .addToCartButton {
+    background-color: #c29d5d;
+    color: white;
+    padding: 0.5rem 1.5rem; /* Mniejszy przycisk */
+    border: none;
+   
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 1rem; /* Odstęp od ceny */
+    align-self: flex-start;
+  }
+  
+  .cardContent .addToCartButton:hover {
+    background-color: #9b7a4e;
+  }
+  
+  .cardContent .addToCartButton:active {
+    transform: scale(0.98);
+  }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cardContent h2 {
+      font-size: 2rem;
+    }
+  
+    .cardContent .price {
+      font-size: 1.75rem;
+    }
+  
+    .cardContent .addToCartButton {
+      font-size: 1.1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }

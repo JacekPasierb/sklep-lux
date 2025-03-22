@@ -1,0 +1,86 @@
+.hero {
+    position: relative;
+    width: 100vw; 
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  
+    /* Tło: zdjęcie luksusowego produktu */
+    background-image: url("/images/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+  }
+  
+  /* Gradient Overlay dla lepszego kontrastu */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+  }
+  
+  /* Efekt ziarna */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/textures/grain.png");
+    background-size: cover;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: grainMove 1.5s steps(10) infinite;
+    z-index: 2;
+  }
+  
+  /* Tekst musi być nad gradientem i ziarnem */
+  .title, .subtitle {
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .title {
+    font-family: var(--font-playfair);
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  
+  .subtitle {
+    font-family: var(--font-geist-sans);
+    font-size: 1.25rem;
+    color: #ddd;
+    margin-top: 1rem;
+  }
+  
+  /* Przycisk CTA */
+  .ctaButton {
+    margin-top: 1.5rem;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: transparent;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+  }
+  
+  .ctaButton:hover {
+    background: white;
+    color: black;
+  }
+  

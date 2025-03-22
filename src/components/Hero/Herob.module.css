@@ -1,0 +1,74 @@
+/* src/components/Hero/Hero.module.css */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(120deg, #f1ece6, #d8d0c1, #e7e2dc);
+  background-size: 600% 600%;
+  animation: backgroundMove 15s ease infinite;
+}
+
+/* ANIMACJA TŁA */
+@keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* GRAIN EFFECT */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/textures/grain.png");
+  opacity: 0.8;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: grainMove 1.5s steps(10) infinite;
+  z-index: 1;
+}
+@keyframes grainMove {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, 1%);
+  }
+  50% {
+    transform: translate(1%, -1%);
+  }
+  75% {
+    transform: translate(2%, 2%);
+  }
+}
+
+.title {
+  font-family: var(--font-playfair);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: #111;
+  position: relative;
+  z-index: 2;
+}
+
+.subtitle {
+  font-family: var(--font-geist-sans);
+  font-size: 1.25rem;
+  color: #444;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 2;
+}

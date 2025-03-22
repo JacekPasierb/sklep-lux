@@ -1,0 +1,17 @@
+.main {
+   
+    text-align: center;
+    background-color: #f9f9f9;
+    color: #111;
+  }
+  
+  .title {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+  
+  .subtitle {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+  }
+  
