@@ -1,0 +1,68 @@
+.discountSection {
+  background-color: rgba(70, 113, 121, 0.205);
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-top: 1px solid rgba(180, 180, 180, 0.443);
+}
+
+.formWrapper {
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.formTitle {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formDescription {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+justify-content:center;}
+
+.inputField {
+  padding: 12px;
+  font-size: 0.8rem;
+
+  border: 1px solid #ccc;
+}
+
+.submitButton {
+  background-color: transparent;
+  color: #c29d5d;
+  padding: 12px;
+  border: 1px solid #c29d5d;
+
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #9b7a4e;
+  color: white;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.875rem;
+  margin-bottom: 15px;
+}
+
+.successMessage {
+  color: green;
+  font-size: 1rem;
+  margin-top: 10px;
+}

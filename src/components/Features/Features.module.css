@@ -1,0 +1,48 @@
+.featuresSection {
+    background-color: #f7f7f7;
+    padding: 50px 20px;
+  }
+  
+  .featuresWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .featuresTitle {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .featureCard {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  .featureIcon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+  }
+  
+  .featureCard h3 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 15px;
+  }
+  
+  .featureCard p {
+    font-size: 1rem;
+    color: #777;
+  }
+  

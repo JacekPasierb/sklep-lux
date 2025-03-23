@@ -1,0 +1,27 @@
+.footerSection {
+    padding: 50px 20px;
+    position: relative;
+}
+.box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.line {
+    height: .1px;
+    width: 100%;
+    background-color: rgb(91, 91, 91);
+    margin-left: 10px;
+}
+
+.logo {
+    font-family: var(--font-playfair);
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.imageWrapper {
+    display: flex;
+    justify-content: flex-end; /* obrazek po prawej */
+  }
+

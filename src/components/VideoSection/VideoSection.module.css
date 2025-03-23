@@ -1,0 +1,34 @@
+.videoSection {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* wysokość na pełny ekran, dostosuj w razie potrzeby */
+    overflow: hidden;
+  }
+  
+  .videoWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .fullWidthVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Aby wideo wypełniało przestrzeń bez zniekształcania */
+    object-position: center; /* Wyśrodkowanie wideo */
+    animation: fadeIn 7s ease-in-out infinite;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
