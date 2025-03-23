@@ -1,28 +1,26 @@
 import { useEffect, useState } from 'react';
 
-export type SectionId = string;
-
-export const useScrollSpy = (sectionIds: SectionId[]) => {
-  const [activeSection, setActiveSection] = useState<SectionId>("");
+export const useScrollSpy = (ids = []) => {
+  const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries.find((entry) => entry.isIntersecting);
         if (visible) {
-          setActiveSection(visible.target.id);
+          setActiveId(visible.target.id);
         }
       },
       { threshold: 0.6 }
     );
 
-    sectionIds.forEach((id) => {
+    ids.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [ids]);
 
-  return activeSection;
+  return activeId;
 };

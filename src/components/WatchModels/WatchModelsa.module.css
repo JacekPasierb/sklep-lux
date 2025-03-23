@@ -5,8 +5,6 @@
   position: relative;
 }
 .contentWrapper {
-  
- 
   border-bottom-width: 1px;
   border-bottom-color: #afafaf;
   flex-flow: column;
@@ -19,7 +17,6 @@
 }
 
 .contentWrapper.flexDirection {
-  
   flex-flow: row;
 }
 .leftWrapper {
@@ -92,7 +89,7 @@
 .numberMenu {
   color: black;
   padding-left: 5px;
-  font-family: "Be Inbox 677 E 4 A 86490 Ea", Arial, sans-serif;
+  font-family: var(--font-playfair);
 
   font-size: 0.7rem;
   line-height: 1.2;
@@ -111,7 +108,6 @@
 }
 
 .paralaxWrapper {
-  
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -123,15 +119,13 @@
 .contentImg {
   object-fit: cover;
   object-position: 65% 50%;
-  
-  
-  
+
   width: 100%;
   height: 115%;
 }
 
 .cardContent {
-  padding: 2rem;
+  padding: 1rem;
 
   color: #333;
 
@@ -141,68 +135,84 @@
   gap: 0.5rem;
   /* transition: all 0.3s ease; */
   opacity: 0;
-  transform: translateY(20px);  /* Początkowe przesunięcie */
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;  /* Delikatne przejście */
+  transform: translateY(20px); /* Początkowe przesunięcie */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Delikatne przejście */
 }
 
 .cardContent.visible {
-    opacity: 1;
-    transform: translateY(0);  /* Zmiana przesunięcia na 0 */
-  }
-  
+  opacity: 1;
+  transform: translateY(0); /* Zmiana przesunięcia na 0 */
+}
 
-
-
-.cardContent .paragraph {
-  font-family: "Neuehaasdisplay", Arial, sans-serif;
-  font-weight: bold;
-  font-size: 0.5rem;
+.cardContent .paragraphDesc {
+  font-family: var(--font-playfair);
+  font-weight: 300;
+  font-size: 0.8rem;
   color: #666;
   line-height: 1.5;
+  text-align: left;
+}
+
+.cardContent .paragraph {
+  font-family: var(--font-playfair);
+  font-size: 0.7rem; /* Mniejsza czcionka */
+  color: #777; /* Subtelniejszy kolor */
+  font-style: italic; /* Kursywa dla elegancji */
+
+  line-height: 1.6; /* Większa przestrzeń między liniami */
+}
+.egeonCartButton {
+  position: relative;
+  background: transparent;
+  border: 0.6px solid #c29d5d;
+  color: #c29d5d;
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-playfair);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.egeonCartButton:hover {
+  background: #c29d5d;
+  color: white;
+}
+
+.egeonCartButton:active {
+  transform: scale(0.97);
+}
+
+.arrowIcon {
+  transition: transform 0.3s ease;
+}
+
+.egeonCartButton:hover .arrowIcon {
+  transform: translateX(5px);
 }
 
 .cardContent .price {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #c29d5d;
-  
-    display: inline-block;
-  }
-  
-  .cardContent .addToCartButton {
-    background-color: #c29d5d;
-    color: white;
-    padding: 0.5rem 1.5rem; /* Mniejszy przycisk */
-    border: none;
-   
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: 1rem; /* Odstęp od ceny */
-    align-self: flex-start;
-  }
-  
-  .cardContent .addToCartButton:hover {
-    background-color: #9b7a4e;
-  }
-  
-  .cardContent .addToCartButton:active {
-    transform: scale(0.98);
-  }
+  font-family: var(--font-playfair);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #c29d5d;
+
+  display: inline-block;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .cardContent h2 {
-      font-size: 2rem;
-    }
-  
-    .cardContent .price {
-      font-size: 1.75rem;
-    }
-  
-    .cardContent .addToCartButton {
-      font-size: 1.1rem;
-      padding: 0.8rem 1.5rem;
-    }
+  .cardContent h2 {
+    font-size: 2rem;
   }
+
+  .cardContent .price {
+    font-size: 1.75rem;
+  }
+}

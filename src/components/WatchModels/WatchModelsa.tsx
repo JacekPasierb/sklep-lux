@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import styles from "./WatchModelsa.module.css";
 import Image from "next/image";
 import {useScrollSpy} from "@/hooks/useScrollSpy";
+import {FaPlus} from "react-icons/fa";
 
 export const WatchModelsa = () => {
   const sectionIds = ["time1", "time2", "time3"];
@@ -119,7 +120,7 @@ export const WatchModelsa = () => {
                         <p className={styles.paragraph}>
                           Skóra naturalna, stal nierdzewna | Czarny | One Size
                         </p>
-                        <p className={styles.paragraph}>
+                        <p className={styles.paragraphDesc}>
                           Nowoczesny luksus, łączący elegancję z nowatorskim
                           designem.
                         </p>
@@ -127,13 +128,28 @@ export const WatchModelsa = () => {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "space-between",
+                            justifyContent: "space-evenly",
                             width: "100%",
                           }}
                         >
                           <div className={styles.price}>1999 zł</div>
-                          <button className={styles.addToCartButton}>
-                            Dodaj do koszyka
+                          <button className={styles.egeonCartButton}>
+                            <span>Dodaj do koszyka</span>
+                            <svg
+                              className={styles.arrowIcon}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -155,7 +171,7 @@ export const WatchModelsa = () => {
                         <p className={styles.paragraph}>
                           Skóra naturalna, stal nierdzewna | Czarny | One Size
                         </p>
-                        <p className={styles.paragraph}>
+                        <p className={styles.paragraphDesc}>
                           Czysty, klasyczny styl, odpowiedni dla osób, które
                           cenią subtelny luksus.
                         </p>
@@ -163,13 +179,28 @@ export const WatchModelsa = () => {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "space-between",
+                            justifyContent: "space-evenly",
                             width: "100%",
                           }}
                         >
                           <div className={styles.price}>4999 zł</div>
-                          <button className={styles.addToCartButton}>
-                            Dodaj do koszyka
+                          <button className={styles.egeonCartButton}>
+                            <span>Dodaj do koszyka</span>
+                            <svg
+                              className={styles.arrowIcon}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
                           </button>
                         </div>
                       </div>
@@ -191,7 +222,7 @@ export const WatchModelsa = () => {
                         <p className={styles.paragraph}>
                           Skóra naturalna, stal nierdzewna | Czarny | One Size
                         </p>
-                        <p className={styles.paragraph}>
+                        <p className={styles.paragraphDesc}>
                           Solidny, wytrzymały model, idealny dla osób, które
                           cenią niezawodność.
                         </p>
@@ -199,13 +230,28 @@ export const WatchModelsa = () => {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "space-between",
+                            justifyContent: "space-evenly",
                             width: "100%",
                           }}
                         >
                           <div className={styles.price}>6999 zł</div>
-                          <button className={styles.addToCartButton}>
-                            Dodaj do koszyka
+                          <button className={styles.egeonCartButton}>
+                            <span>Dodaj do koszyka</span>
+                            <svg
+                              className={styles.arrowIcon}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
                           </button>
                         </div>
                       </div>
