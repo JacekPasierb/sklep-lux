@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import type {Metadata} from "next";
+import {Geist, Geist_Mono, Playfair_Display} from "next/font/google";
 
 // Fonty
 const geistSans = Geist({
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
 };
 
 // Layout
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="pl" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}>
+    <html
+      lang="pl"
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}
+    >
+      <head></head>
       <body>{children}</body>
     </html>
   );

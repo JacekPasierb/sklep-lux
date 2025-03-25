@@ -125,12 +125,8 @@ export const WatchModelsa = () => {
                           designem.
                         </p>
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            width: "100%",
-                          }}
+                        className={styles.cardAction}
+                         
                         >
                           <div className={styles.price}>1999 zł</div>
                           <button className={styles.egeonCartButton}>
@@ -176,12 +172,7 @@ export const WatchModelsa = () => {
                           cenią subtelny luksus.
                         </p>
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            width: "100%",
-                          }}
+                           className={styles.cardAction}
                         >
                           <div className={styles.price}>4999 zł</div>
                           <button className={styles.egeonCartButton}>
@@ -227,12 +218,7 @@ export const WatchModelsa = () => {
                           cenią niezawodność.
                         </p>
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            width: "100%",
-                          }}
+                           className={styles.cardAction}
                         >
                           <div className={styles.price}>6999 zł</div>
                           <button className={styles.egeonCartButton}>

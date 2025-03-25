@@ -1,218 +1,258 @@
-.section {
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.contentWrapper {
-  border-bottom-width: 1px;
-  border-bottom-color: #afafaf;
-  flex-flow: column;
-  justify-content: space-between;
-  align-items: stretch;
-  width: 100%;
-  padding-left: 0%;
-  display: flex;
-  position: relative;
-}
+@media screen and (min-width: 480px) {
+  .section {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 
-.contentWrapper.flexDirection {
-  flex-flow: row;
-}
-.leftWrapper {
-  width: 50%;
-  padding-left: 2%;
-}
+  .contentWrapper {
+    border-bottom-width: 1px;
+    border-bottom-color: #afafaf;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    padding-left: 0%;
+    display: flex;
+    position: relative;
+  }
 
-.rightWrapper {
-  grid-column-gap: 0rem;
-  grid-row-gap: 0.1rem;
-  flex-flow: column;
-  justify-content: space-between;
-  width: 50%;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  display: flex;
-  position: relative;
-}
+  .contentWrapper.flexDirection {
+    flex-flow: row;
+  }
 
-.stickyContentWrapper {
-  height: 40vh;
-  position: sticky;
-  top: 15vh;
-}
-.stickyNavWrapper {
-  grid-column-gap: 4%;
-  grid-row-gap: 4%;
-  justify-content: flex-start;
-  align-items: stretch;
-  height: 60px;
-  max-height: 90px;
-  margin-top: 2rem;
-  padding-left: 0%;
-  padding-right: 2%;
-  display: flex;
-}
+  .leftWrapper {
+    width: 50%;
+    padding-left: 2%;
+  }
 
-.navLine {
-  background-color: #f5f5f5;
-  width: 2px;
-  height: 100%;
-  position: relative;
-}
+  .rightWrapper {
+    grid-column-gap: 0rem;
+    grid-row-gap: 0.1rem;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 50%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    display: flex;
+    position: relative;
+  }
 
-.navLineLinkWrapper {
-  flex-flow: column;
-  display: flex;
-}
+  .stickyContentWrapper {
+    height: 40vh;
+    position: sticky;
+    top: 15vh;
+  }
 
-.navLineOrange {
-  background-color: grey;
-  width: 2px;
-  height: 20px;
-}
-.navLineActive {
-  background-color: black; /* Zmieniamy kolor na czarny, gdy aktywna sekcja */
-}
+  .stickyNavWrapper {
+    grid-column-gap: 4%;
+    grid-row-gap: 4%;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 60px;
+    max-height: 90px;
+    margin-top: 2rem;
+    padding-left: 0%;
+    padding-right: 2%;
+    display: flex;
+  }
 
-.navLineLink {
-  justify-content: flex-start;
-  align-items: center;
-  height: 20px;
-  max-height: 30px;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-decoration: none;
-  display: flex;
-}
+  .navLine {
+    background-color: #f5f5f5;
+    width: 2px;
+    height: 100%;
+    position: relative;
+  }
 
-.numberMenu {
-  color: black;
-  padding-left: 5px;
-  font-family: var(--font-playfair);
+  .navLineLinkWrapper {
+    flex-flow: column;
+    display: flex;
+  }
 
-  font-size: 0.7rem;
-  line-height: 1.2;
-}
+  .navLineOrange {
+    background-color: grey;
+    width: 2px;
+    height: 20px;
+  }
 
-.h2 {
-  color: black;
-  font-family: Neuehaasdisplay, Arial, sans-serif;
-  font-size: 2rem;
-  font-weight: 300;
-  line-height: 1;
-}
+  .navLineActive {
+    background-color: black; /* Zmieniamy kolor na czarny, gdy aktywna sekcja */
+  }
 
-.imgwrapper {
-  height: 35rem;
-}
+  .navLineLink {
+    justify-content: flex-start;
+    align-items: center;
+    height: 20px;
+    max-height: 30px;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-decoration: none;
+    display: flex;
+  }
 
-.paralaxWrapper {
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  overflow: hidden;
-}
+  .numberMenu {
+    color: black;
+    padding-left: 5px;
+    font-family: var(--font-playfair);
 
-.contentImg {
-  object-fit: cover;
-  object-position: 65% 50%;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
 
-  width: 100%;
-  height: 115%;
-}
-
-.cardContent {
-  padding: 1rem;
-
-  color: #333;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  /* transition: all 0.3s ease; */
-  opacity: 0;
-  transform: translateY(20px); /* Początkowe przesunięcie */
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Delikatne przejście */
-}
-
-.cardContent.visible {
-  opacity: 1;
-  transform: translateY(0); /* Zmiana przesunięcia na 0 */
-}
-
-.cardContent .paragraphDesc {
-  font-family: var(--font-playfair);
-  font-weight: 300;
-  font-size: 0.8rem;
-  color: #666;
-  line-height: 1.5;
-  text-align: left;
-}
-
-.cardContent .paragraph {
-  font-family: var(--font-playfair);
-  font-size: 0.7rem; /* Mniejsza czcionka */
-  color: #777; /* Subtelniejszy kolor */
-  font-style: italic; /* Kursywa dla elegancji */
-
-  line-height: 1.6; /* Większa przestrzeń między liniami */
-}
-.egeonCartButton {
-  position: relative;
-  background: transparent;
-  border: 0.6px solid #c29d5d;
-  color: #c29d5d;
-  padding: 0.5rem 1.5rem;
-  font-family: var(--font-playfair);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.egeonCartButton:hover {
-  background: #c29d5d;
-  color: white;
-}
-
-.egeonCartButton:active {
-  transform: scale(0.97);
-}
-
-.arrowIcon {
-  transition: transform 0.3s ease;
-}
-
-.egeonCartButton:hover .arrowIcon {
-  transform: translateX(5px);
-}
-
-.cardContent .price {
-  font-family: var(--font-playfair);
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #c29d5d;
-
-  display: inline-block;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .cardContent h2 {
+  .h2 {
+    color: black;
+    font-family: Neuehaasdisplay, Arial, sans-serif;
     font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .imgwrapper {
+    height: 35rem;
+  }
+
+  .paralaxWrapper {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .contentImg {
+    object-fit: cover;
+    object-position: 65% 50%;
+
+    width: 100%;
+    height: 115%;
+  }
+
+  .cardContent {
+    padding: 1rem;
+
+    color: #333;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    /* transition: all 0.3s ease; */
+    opacity: 0;
+    transform: translateY(20px); /* Początkowe przesunięcie */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Delikatne przejście */
+  }
+
+  .cardContent.visible {
+    opacity: 1;
+    transform: translateY(0); /* Zmiana przesunięcia na 0 */
+  }
+
+  .cardContent .paragraphDesc {
+    font-family: var(--font-playfair);
+    font-weight: 300;
+    font-size: 0.6rem;
+    color: #666;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .cardContent .paragraph {
+    font-family: var(--font-playfair);
+    font-size: 0.5rem; /* Mniejsza czcionka */
+    color: #777; /* Subtelniejszy kolor */
+    font-style: italic; /* Kursywa dla elegancji */
+
+    line-height: 1.6; /* Większa przestrzeń między liniami */
+  }
+
+  .cardAction {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  .egeonCartButton {
+    position: relative;
+    background: transparent;
+    border: 0.6px solid #c29d5d;
+    color: #c29d5d;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--font-playfair);
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .egeonCartButton:hover {
+    background: #c29d5d;
+    color: white;
+  }
+
+  .egeonCartButton:active {
+    transform: scale(0.97);
+  }
+
+  .arrowIcon {
+    transition: transform 0.3s ease;
+  }
+
+  .egeonCartButton:hover .arrowIcon {
+    transform: translateX(5px);
   }
 
   .cardContent .price {
-    font-size: 1.75rem;
+    font-family: var(--font-playfair);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #c29d5d;
+
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .cardContent .paragraphDesc {
+    font-size: 0.8rem;
+  }
+
+  .cardContent .paragraph {
+    font-size: 0.7rem;
+  }
+  .cardAction {
+    gap: 0.5rem;
+  }
+
+  .cardContent .price {
+    font-size: 1.5rem;
+  }
+
+  .egeonCartButton {
+    position: relative;
+    background: transparent;
+    border: 0.6px solid #c29d5d;
+    color: #c29d5d;
+    padding: 0.5rem 1.5rem;
+    font-family: var(--font-playfair);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
   }
 }
