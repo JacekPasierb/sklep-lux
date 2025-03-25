@@ -1,13 +1,12 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo} from "react";
 import styles from "./WatchModelsa.module.css";
 import Image from "next/image";
 import {useScrollSpy} from "@/hooks/useScrollSpy";
-import {FaPlus} from "react-icons/fa";
 
 export const WatchModelsa = () => {
-  const sectionIds = ["time1", "time2", "time3"];
+  const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
   const activeId = useScrollSpy(sectionIds);
   const [visible, setVisible] = useState({
     time1: false,
@@ -46,14 +45,17 @@ export const WatchModelsa = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [sectionIds]);
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="Products">
+    
       <div className={`${styles.contentWrapper} ${styles.flexDirection}`}>
         <div className={styles.leftWrapper}>
           <div className={styles.stickyContentWrapper}>
+          <h2 className={styles.title}>Ekskluzywne zegarki najnowsza kolekcja</h2>
             <div className={styles.stickyNavWrapper}>
+              
               <div className={styles.navLine}>
                 <div
                   className={`${styles.navLineOrange} ${

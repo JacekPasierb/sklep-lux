@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} id='Home'>
       <motion.h1
         className={styles.title}
         initial={{ opacity: 0, y: 40 }}

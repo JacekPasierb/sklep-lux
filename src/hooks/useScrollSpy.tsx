@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useScrollSpy = (ids = []) => {
+export const useScrollSpy = (ids: string[] = []) => {
   const [activeId, setActiveId] = useState('');
 
   useEffect(() => {
