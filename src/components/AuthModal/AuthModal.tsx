@@ -77,17 +77,18 @@ const AuthModal = ({
         <button onClick={handleClose} className={style.closeButton}>
           X
         </button>
-        <h2>{isRegister ? "Register" : "Login"}</h2>
+        <h2>{isRegister ? "Utwórz Konto" : "Logowanie"}</h2>
 
         {/* Formularz rejestracji lub logowania */}
         {isRegister ? <RegisterForm /> : <LoginForm />}
 
-        <p>
-          {isRegister ? "Already have an account?" : "Don't have an account?"}
-          <button onClick={() => setIsRegister(!isRegister)}>
-            {isRegister ? "Login" : "Register"}
+     
+         
+          
+          <button onClick={() => setIsRegister(!isRegister)} className={style.btnRedirect}>
+          {isRegister ? "Przejdź do logowania" : "Utwórz konto"}
           </button>
-        </p>
+        
       </div>
     </div>
   );

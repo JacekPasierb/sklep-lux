@@ -4,6 +4,10 @@ import {useEffect, useState, useMemo} from "react";
 import styles from "./WatchModelsa.module.css";
 import Image from "next/image";
 import {useScrollSpy} from "@/hooks/useScrollSpy";
+import {useUser} from "@/hooks/useUser";
+import {toast} from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cart/cartSlice";
 
 export const WatchModelsa = () => {
   const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
@@ -13,6 +17,24 @@ export const WatchModelsa = () => {
     time2: false,
     time3: false,
   });
+
+  const {isLoggedIn} = useUser();
+  const dispatch = useDispatch();
+
+  const handleAddToCart = async (product: {
+    id: string;
+    name: string;
+    price: number;
+  }) => {
+    if (!isLoggedIn) {
+      dispatch(addToCart(product));
+      toast.success("Dodano produkt do lokalnego koszyka!");
+      return;
+    }
+
+    // 🔸 Tu później dodamy fetch do /api/cart/add
+    toast.success(`Dodano ${product.name} do koszyka!`);
+  };
 
   useEffect(() => {
     // Create a new IntersectionObserver instance
@@ -49,13 +71,13 @@ export const WatchModelsa = () => {
 
   return (
     <section className={styles.section} id="Products">
-    
       <div className={`${styles.contentWrapper} ${styles.flexDirection}`}>
         <div className={styles.leftWrapper}>
           <div className={styles.stickyContentWrapper}>
-          <h2 className={styles.title}>Ekskluzywne zegarki najnowsza kolekcja</h2>
+            <h2 className={styles.title}>
+              Ekskluzywne zegarki najnowsza kolekcja
+            </h2>
             <div className={styles.stickyNavWrapper}>
-              
               <div className={styles.navLine}>
                 <div
                   className={`${styles.navLineOrange} ${
@@ -126,12 +148,18 @@ export const WatchModelsa = () => {
                           Nowoczesny luksus, łączący elegancję z nowatorskim
                           designem.
                         </p>
-                        <div
-                        className={styles.cardAction}
-                         
-                        >
+                        <div className={styles.cardAction}>
                           <div className={styles.price}>1999 zł</div>
-                          <button className={styles.egeonCartButton}>
+                          <button
+                            className={styles.egeonCartButton}
+                            onClick={() =>
+                              handleAddToCart({
+                                id: "watch1",
+                                name: "LuxeNova",
+                                price: 1999,
+                              })
+                            }
+                          >
                             <span>Dodaj do koszyka</span>
                             <svg
                               className={styles.arrowIcon}
@@ -173,11 +201,18 @@ export const WatchModelsa = () => {
                           Czysty, klasyczny styl, odpowiedni dla osób, które
                           cenią subtelny luksus.
                         </p>
-                        <div
-                           className={styles.cardAction}
-                        >
+                        <div className={styles.cardAction}>
                           <div className={styles.price}>4999 zł</div>
-                          <button className={styles.egeonCartButton}>
+                          <button
+                            className={styles.egeonCartButton}
+                            onClick={() =>
+                              handleAddToCart({
+                                id: "watch2",
+                                name: "Prestige",
+                                price: 4999,
+                              })
+                            }
+                          >
                             <span>Dodaj do koszyka</span>
                             <svg
                               className={styles.arrowIcon}
@@ -219,11 +254,18 @@ export const WatchModelsa = () => {
                           Solidny, wytrzymały model, idealny dla osób, które
                           cenią niezawodność.
                         </p>
-                        <div
-                           className={styles.cardAction}
-                        >
+                        <div className={styles.cardAction}>
                           <div className={styles.price}>6999 zł</div>
-                          <button className={styles.egeonCartButton}>
+                          <button
+                            className={styles.egeonCartButton}
+                            onClick={() =>
+                              handleAddToCart({
+                                id: "watch3",
+                                name: "Titan",
+                                price: 6999,
+                              })
+                            }
+                          >
                             <span>Dodaj do koszyka</span>
                             <svg
                               className={styles.arrowIcon}

@@ -1,0 +1,131 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* przyciemnione tło */
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background-color: #b9b9b94d; /* półprzezroczysty jak logowanie */
+    width: 400px;
+    height: 100%;
+    backdrop-filter: blur(20px);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    padding: 30px 20px;
+    position: relative;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-playfair);
+  }
+  
+  .open {
+    transform: translateX(0);
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+  }
+  
+  .title {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .empty {
+    text-align: center;
+    font-style: italic;
+    color: #eee;
+    margin-top: 60px;
+    font-size: 1.1rem;
+  }
+  
+  .items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .item {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 14px;
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+  
+  .item button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #c29d5d;
+    cursor: pointer;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .footer p {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  
+  .checkout {
+    background-color: #c29d5d;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .checkout:hover {
+    background-color: #af8e4d;
+  }
+  
+  .clear {
+    background-color: transparent;
+    color: #c29d5d;
+    border: 1px solid #c29d5d;
+    padding: 8px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
+  .clear:hover {
+    background-color: #c29d5d;
+    color: white;
+  }
+  

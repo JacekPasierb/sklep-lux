@@ -1,15 +1,40 @@
-// lib/mongoose.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const connectMongoDB = async () => {
-  if (mongoose.connection.readyState >= 1) return;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
-  try {
-    await mongoose.connect(process.env.MONGO_URI!);
-    console.log("MongoDB connected successfully!");
-  } catch (error) {
-    console.error("MongoDB connection failed:", error);
-  }
+if (!MONGODB_URI) {
+  throw new Error("⚠️ Brakuje zmiennej środowiskowej MONGODB_URI");
+}
+
+// 👇 Rozszerzamy typ globalThis o mongoose
+declare global {
+  const mongoose: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
+}
+
+const globalWithMongoose = global as typeof globalThis & {
+  mongoose?: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
 };
 
-export default connectMongoDB;
+const cached = (globalWithMongoose.mongoose ??= {
+  conn: null,
+  promise: null,
+});
+
+export async function connectToDatabase() {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+    });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}

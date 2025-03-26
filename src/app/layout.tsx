@@ -3,6 +3,8 @@ import "./globals.css";
 import type {Metadata} from "next";
 import {Geist, Geist_Mono, Playfair_Display} from "next/font/google";
 
+import ClientProvider from "../components/ClientProvider";
+
 // Fonty
 const geistSans = Geist({
   subsets: ["latin"],
@@ -34,7 +36,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}
     >
       <head></head>
-      <body>{children}</body>
+      <body>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
