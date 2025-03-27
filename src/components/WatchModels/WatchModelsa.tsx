@@ -25,6 +25,7 @@ export const WatchModelsa = () => {
     id: string;
     name: string;
     price: number;
+    image:string;
   }) => {
     if (!isLoggedIn) {
       dispatch(addToCart(product));
@@ -157,6 +158,7 @@ export const WatchModelsa = () => {
                                 id: "watch1",
                                 name: "LuxeNova",
                                 price: 1999,
+                                 image: "/images/watch1.jpg"
                               })
                             }
                           >
@@ -210,6 +212,7 @@ export const WatchModelsa = () => {
                                 id: "watch2",
                                 name: "Prestige",
                                 price: 4999,
+                               image: "/images/watch2.jpg"
                               })
                             }
                           >
@@ -263,6 +266,7 @@ export const WatchModelsa = () => {
                                 id: "watch3",
                                 name: "Titan",
                                 price: 6999,
+                                 image: "/images/watch3.jpg"
                               })
                             }
                           >

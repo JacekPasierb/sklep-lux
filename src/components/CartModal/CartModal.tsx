@@ -1,10 +1,16 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
-import { clearCart, removeFromCart } from "@/redux/cart/cartSlice";
-import { useEffect, useState } from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {RootState} from "@/redux/store";
+import {
+  clearCart,
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+} from "@/redux/cart/cartSlice";
+import {useEffect, useState} from "react";
 import styles from "./CartModal.module.css";
+import Image from "next/image";
 
 export default function CartModal({
   isOpen,
@@ -38,7 +44,10 @@ export default function CartModal({
 
   if (!isRendered) return null;
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className={styles.modal}>
@@ -46,7 +55,9 @@ export default function CartModal({
         className={`${styles.modalContent} ${show ? styles.open : ""}`}
         onTransitionEnd={handleTransitionEnd}
       >
-        <button onClick={closeModal} className={styles.closeButton}>X</button>
+        <button onClick={closeModal} className={styles.closeButton}>
+          X
+        </button>
         <h2 className={styles.title}>Koszyk</h2>
 
         {cartItems.length === 0 ? (
@@ -56,18 +67,63 @@ export default function CartModal({
             <ul className={styles.items}>
               {cartItems.map((item) => (
                 <li key={item.id} className={styles.item}>
-                  <div>
-                    <strong>{item.name}</strong>
-                    <p>{item.price} zł x {item.quantity}</p>
+                  <div className={styles.imageWrapper}>
+                    <Image
+                      src={item.image}
+                      width={50}
+                      height={50}
+                      alt={item.name}
+                      className={styles.thumb}
+                    />
                   </div>
-                  <button onClick={() => dispatch(removeFromCart(item.id))}>🗑️</button>
+
+                  <div className={styles.detailsWrapper}>
+                    <div className={styles.topRow}>
+                      <span className={styles.itemName}>{item.name}</span>
+                      <span className={styles.itemPrice}>
+                        {" "}
+                        {item.quantity * item.price} zł
+                      </span>
+                    </div>
+
+                    <div className={styles.bottomRow}>
+                      <div className={styles.quantityControls}>
+                        <button
+                          className={styles.qtyBtn}
+                          onClick={() => dispatch(decrementQuantity(item.id))}
+                        >
+                          −
+                        </button>
+                        <span className={styles.qtyValue}>{item.quantity}</span>
+                        <button
+                          className={styles.qtyBtn}
+                          onClick={() => dispatch(incrementQuantity(item.id))}
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        className={styles.removeBtn}
+                        onClick={() => dispatch(removeFromCart(item.id))}
+                        title="Usuń z koszyka"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>
+
             <div className={styles.footer}>
               <p>Suma: {total} zł</p>
               <button className={styles.checkout}>Do kasy</button>
-              <button className={styles.clear} onClick={() => dispatch(clearCart())}>Wyczyść koszyk</button>
+              <button
+                className={styles.clear}
+                onClick={() => dispatch(clearCart())}
+              >
+                Wyczyść koszyk
+              </button>
             </div>
           </>
         )}

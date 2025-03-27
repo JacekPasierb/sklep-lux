@@ -129,3 +129,128 @@
     color: white;
   }
   
+
+
+  .itemInfo {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .itemName {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  
+  .itemDetails {
+    font-size: 0.95rem;
+    color: #ccc;
+  }
+  
+  .itemTotal {
+    font-weight: bold;
+    color: #c29d5d;
+  }
+  
+  .removeBtn {
+    background: none;
+    border: none;
+    color: #c29d5d;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+  
+  .removeBtn:hover {
+    color: red;
+  }
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: #fff;
+    flex-direction: row;
+  }
+  
+  .imageWrapper {
+    flex-shrink: 0;
+  }
+  
+  .thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .detailsWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .topRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+  }
+  
+  .itemName {
+    font-weight: 600;
+  }
+  
+  .itemPrice {
+    font-weight: 500;
+    color: #c29d5d;
+  }
+  
+  .bottomRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .qtyBtn {
+    background: transparent;
+    border: 1px solid #c29d5d;
+    color: #c29d5d;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .qtyBtn:hover {
+    background-color: #c29d5d;
+    color: white;
+  }
+  
+  .qtyValue {
+    min-width: 24px;
+    text-align: center;
+  }
+  
+  .removeBtn {
+    background: none;
+    border: none;
+    color: #c29d5d;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .removeBtn:hover {
+    color: red;
+  }
+  
