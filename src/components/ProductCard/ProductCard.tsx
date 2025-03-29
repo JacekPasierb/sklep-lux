@@ -1,6 +1,10 @@
 import React from 'react'
 import styles from "./ProductCard.module.css"
 import Image from 'next/image'
+import { addToCart } from '../../redux/cart/cartSlice';
+import { useDispatch } from 'react-redux';
+import { useUser } from '../../hooks/useUser';
+import { toast } from 'react-toastify';
 
 interface ProductCardProps {
     imageSrc: string;
@@ -17,6 +21,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
     description,
     price,
   }) => {
+    const {isLoggedIn} = useUser();
+    const dispatch = useDispatch();
+  
+    const handleAddToCart = async (product: {
+      id: string;
+      name: string;
+      price: number;
+      image:string;
+    }) => {
+      if (!isLoggedIn) {
+        dispatch(addToCart(product));
+        toast.success("Dodano produkt do lokalnego koszyka!");
+        return;
+      }
+  
+      // 🔸 Tu później dodamy fetch do /api/cart/add
+      toast.success(`Dodano ${product.name} do koszyka!`);
+    };
   return (
     <div className={styles.productCard}>
     <Image
@@ -38,7 +60,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </p>
       <div className={styles.priceAndButton}>
         <span className={styles.price}>{price}</span>
-        <button className={styles.addToCartButton}>
+        <button className={styles.addToCartButton} onClick={() =>
+                              handleAddToCart({
+                                id: modelName,
+                                name: modelName,
+                                price: parseFloat(price),
+                                image: imageSrc
+                              })
+                            }>
           Dodaj do koszyka
         </button>
       </div>

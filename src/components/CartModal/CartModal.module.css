@@ -254,3 +254,222 @@
     color: red;
   }
   
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .form input {
+    padding: 10px;
+    border: 1px solid #c29d5d;
+    background-color: transparent;
+    color: #fff;
+    
+  }
+  .form input::placeholder {
+  
+    color: #fff;
+    
+  }
+  .subheading {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .success {
+    text-align: center;
+    margin-top: 40px;
+    color: #fff;
+  }
+  
+  .success h3 {
+    color: #c29d5d;
+    margin-bottom: 10px;
+  }
+  
+  .subheading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    color: #fff;
+  }
+  
+  .radioGroup label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+  }
+  
+  .radioGroup input[type="radio"] {
+    accent-color: #c29d5d;
+  }
+  
+  
+  .shippingWrapper {
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  .summary {
+    margin-top: 16px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .summary strong {
+    font-size: 1.2rem;
+    color: #c29d5d;
+  }
+
+  .paymentStep {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .shippingWrapper,
+  .radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .radioLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: white;
+  }
+  
+  .summary {
+  
+    padding: 10px;
+    
+    color: white;
+    font-size: 0.95rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #c29d5d;
+    margin-bottom: 6px;
+  }
+  
+  .itemInfo {
+    flex: 1;
+    margin-left: 12px;
+    color: white;
+  }
+  
+  .itemControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 10px;
+  }
+  
+  .controlBtn {
+    background-color: transparent;
+    border: 1px solid #c29d5d;
+    color: #c29d5d;
+    padding: 2px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .controlBtn:hover {
+    background-color: #c29d5d;
+    color: white;
+  }
+  
+  .itemTotal {
+    min-width: 70px;
+    text-align: right;
+    color: white;
+  }
+  
+  .removeBtn {
+    background: none;
+    border: none;
+    color: #ff7676;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .itemDetails {
+    flex: 1;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .topRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+  
+  .bottomRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .controlBtn {
+    background-color: transparent;
+    border: 1px solid #c29d5d;
+    color: #c29d5d;
+    padding: 2px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .controlBtn:hover {
+    background-color: #c29d5d;
+    color: white;
+  }
+  
+  .itemTotal {
+    min-width: 70px;
+    text-align: right;
+    color: white;
+  }
+  
+  .removeBtn {
+    background: none;
+    border: none;
+    color: #ff7676;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  

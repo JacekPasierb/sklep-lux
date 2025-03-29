@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
 import React from "react";
 import styles from "./WatchModelsMin.module.css";
-import Image from "next/image";
 import ProductCard from "../ProductCard/ProductCard";
 
 const WatchModelsMin = () => {
@@ -10,7 +9,7 @@ const WatchModelsMin = () => {
     <section id="Prosucts">
       <h2 className={styles.title}>Ekskluzywne zegarki najnowsza kolekcja</h2>
       <div className={styles.productList}>
-      <ProductCard
+        <ProductCard
           imageSrc="/images/watch1.jpg"
           modelName="LuxeNova"
           modelDetails="Skóra naturalna, stal nierdzewna | Czarny | One Size"
@@ -24,11 +23,13 @@ const WatchModelsMin = () => {
           description="Czysty, klasyczny styl, odpowiedni dla osób, które cenią subtelny luksus."
           price="2999 zł"
         />
-        <ProductCard imageSrc="/images/watch3.jpg"
+        <ProductCard
+          imageSrc="/images/watch3.jpg"
           modelName="Titan"
           modelDetails="Skóra naturalna, stal nierdzewna | Czarny | One Size"
           description="Solidny, wytrzymały model, idealny dla osób, które cenią niezawodność."
-          price="3999 zł"/>
+          price="3999 zł"
+        />
         {/* <div className={styles.productCard}>
           <Image
             src="/images/watch2.jpg"
