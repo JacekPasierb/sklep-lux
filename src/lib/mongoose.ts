@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
+const MONGODB_URI = process.env.MONGO_URI!;
 
 if (!MONGODB_URI) {
   throw new Error("⚠️ Brakuje zmiennej środowiskowej MONGODB_URI");
@@ -31,6 +31,7 @@ export async function connectToDatabase() {
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
+      dbName: "Sklep-Lux",
       bufferCommands: false,
     });
   }

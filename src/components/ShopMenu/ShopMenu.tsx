@@ -17,7 +17,13 @@ const ShopMenu = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (searchParams?.get("payment") === "success") {
+    const extOrderId = searchParams?.get("order");
+    if (searchParams?.get("payment") === "success" ) {
+      fetch("/api/orders/update-status", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ extOrderId}),
+      });
       setIsCartOpen(true);         // otwieramy modal
       setForceStep("success");     // od razu pokazujemy success
       router.replace("/", { scroll: false }); // czyścimy adres

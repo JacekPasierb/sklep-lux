@@ -2,7 +2,7 @@
 
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "@/redux/store";
-import { useRouter, useSearchParams } from "next/navigation";
+import {v4 as uuidv4} from "uuid";
 
 import {
   clearCart,
@@ -14,6 +14,7 @@ import {useEffect, useState} from "react";
 import styles from "./CartModal.module.css";
 import Image from "next/image";
 import {toast} from "react-toastify";
+import {useUser} from "../../hooks/useUser";
 
 export default function CartModal({
   isOpen,
@@ -26,12 +27,13 @@ export default function CartModal({
 }) {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-
+  const {user} = useUser();
   const [isRendered, setIsRendered] = useState(false);
   const [show, setShow] = useState(false);
   const [step, setStep] = useState<"cart" | "form" | "payment" | "success">(
     "cart"
   );
+  const extOrderId = uuidv4();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -64,12 +66,7 @@ export default function CartModal({
       return;
     }
 
-    // Tu później można wysłać do MongoDB
-    console.log("Zamówienie:", {
-      produkty: cartItems,
-      dane: formData,
-      suma: total,
-    });
+    
 
     setStep("success");
     dispatch(clearCart());
@@ -79,7 +76,7 @@ export default function CartModal({
       setStep(forceStep);
     }
   }, [forceStep]);
-  
+
   useEffect(() => {
     if (isOpen) {
       setIsRendered(true);
@@ -117,18 +114,19 @@ export default function CartModal({
     try {
       const response = await fetch("/api/payment/create-order", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           cart: cartItems,
           formData,
+          extOrderId,
         }),
       });
-  
+
       const data = await response.json();
-      console.log("A", data);
-      
+
       if (data.redirectUri) {
         window.location.href = data.redirectUri;
+        
       } else {
         toast.error("Nie udało się przekierować do płatności.");
       }
@@ -137,13 +135,13 @@ export default function CartModal({
       console.error(error);
     }
   };
-   const closeEnd = () =>{
+  const closeEnd = () => {
     closeModal();
-    setStep("cart")
-    setShow(false)
+    setStep("cart");
+    setShow(false);
     dispatch(clearCart());
-   }
-  
+  };
+
   return (
     <div className={styles.modal}>
       <div
@@ -160,81 +158,81 @@ export default function CartModal({
         </h2>
 
         {step === "cart" && (
-  <>
-    {cartItems.length === 0 ? (
-      <p className={styles.empty}>Koszyk jest pusty</p>
-    ) : (
-      <>
-        <ul className={styles.items}>
-          {cartItems.map((item) => (
-            <li key={item.id} className={styles.item}>
-              <Image
-                src={item.image}
-                width={50}
-                height={50}
-                className={styles.thumb}
-                alt={item.name}
-              />
+          <>
+            {cartItems.length === 0 ? (
+              <p className={styles.empty}>Koszyk jest pusty</p>
+            ) : (
+              <>
+                <ul className={styles.items}>
+                  {cartItems.map((item) => (
+                    <li key={item.id} className={styles.item}>
+                      <Image
+                        src={item.image}
+                        width={50}
+                        height={50}
+                        className={styles.thumb}
+                        alt={item.name}
+                      />
 
-              <div className={styles.itemDetails}>
-                <div className={styles.topRow}>
-                  <strong>{item.name}</strong>
-                  <span>{item.price * item.quantity} zł</span>
-                </div>
+                      <div className={styles.itemDetails}>
+                        <div className={styles.topRow}>
+                          <strong>{item.name}</strong>
+                          <span>{item.price * item.quantity} zł</span>
+                        </div>
 
-                <div className={styles.bottomRow}>
-                  <div className={styles.quantityControls}>
-                    <button
-                      onClick={() => dispatch(decrementQuantity(item.id))}
-                      className={styles.controlBtn}
-                    >
-                      −
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button
-                      onClick={() => dispatch(incrementQuantity(item.id))}
-                      className={styles.controlBtn}
-                    >
-                      +
-                    </button>
-                  </div>
+                        <div className={styles.bottomRow}>
+                          <div className={styles.quantityControls}>
+                            <button
+                              onClick={() =>
+                                dispatch(decrementQuantity(item.id))
+                              }
+                              className={styles.controlBtn}
+                            >
+                              −
+                            </button>
+                            <span>{item.quantity}</span>
+                            <button
+                              onClick={() =>
+                                dispatch(incrementQuantity(item.id))
+                              }
+                              className={styles.controlBtn}
+                            >
+                              +
+                            </button>
+                          </div>
 
-               
+                          <button
+                            onClick={() => dispatch(removeFromCart(item.id))}
+                            className={styles.removeBtn}
+                            title="Usuń produkt"
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
 
+                <div className={styles.footer}>
+                  <p>Suma: {total} zł</p>
                   <button
-                    onClick={() => dispatch(removeFromCart(item.id))}
-                    className={styles.removeBtn}
-                    title="Usuń produkt"
+                    className={styles.checkout}
+                    onClick={() => setStep("form")}
                   >
-                    🗑️
+                    Przejdź do kasy
+                  </button>
+                  <button
+                    className={styles.clear}
+                    onClick={() => dispatch(clearCart())}
+                  >
+                    Wyczyść koszyk
                   </button>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <div className={styles.footer}>
-          <p>Suma: {total} zł</p>
-          <button
-            className={styles.checkout}
-            onClick={() => setStep("form")}
-          >
-            Przejdź do kasy
-          </button>
-          <button
-            className={styles.clear}
-            onClick={() => dispatch(clearCart())}
-          >
-            Wyczyść koszyk
-          </button>
-        </div>
-      </>
-    )}
-  </>
-)}
-
-
+              </>
+            )}
+          </>
+        )}
 
         {step === "form" && (
           <form className={styles.form} onSubmit={handleOrderSubmit}>
@@ -299,8 +297,6 @@ export default function CartModal({
         )}
         {step === "payment" && (
           <div className={styles.paymentStep}>
-        
-
             <div className={styles.shippingWrapper}>
               <h4 className={styles.sectionTitle}>Metoda dostawy</h4>
               <label className={styles.radioLabel}>
@@ -343,8 +339,11 @@ export default function CartModal({
               </p>
             </div>
 
-           
-            <button type="submit" className={styles.checkout} onClick={handlePay}>
+            <button
+              type="submit"
+              className={styles.checkout}
+              onClick={handlePay}
+            >
               Zamawiam i płacę
             </button>
             <button

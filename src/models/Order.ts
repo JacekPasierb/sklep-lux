@@ -1,51 +1,46 @@
-// /models/Order.ts
+import mongoose, { Schema, models, model } from "mongoose";
 
-import mongoose, { Schema, Document, Types } from "mongoose";
-
-export interface IOrder extends Document {
-  userId?: Types.ObjectId | null;
-  products: {
-    name: string;
-    price: number;
-    quantity: number;
-  }[];
-  total: number;
-  formData: {
-    name: string;
-    email: string;
-    phone: string;
-    street: string;
-    city: string;
-    country: string;
-    shipping: string;
-    payment: string;
-  };
-  status: "pending" | "paid" | "failed";
-  createdAt: Date;
-}
-
-const OrderSchema: Schema = new Schema<IOrder>({
-  userId: { type: Schema.Types.ObjectId, ref: "User", default: null },
-  products: [
-    {
-      name: { type: String, required: true },
-      price: { type: Number, required: true },
-      quantity: { type: Number, required: true },
+const orderSchema = new Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null, // gość
     },
-  ],
-  total: { type: Number, required: true },
-  formData: {
-    name: String,
-    email: String,
-    phone: String,
-    street: String,
-    city: String,
-    country: String,
-    shipping: String,
-    payment: String,
+    extOrderId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    products: [
+      {
+        id: String,
+        name: String,
+        price: Number,
+        quantity: Number,
+        image: String,
+      },
+    ],
+    total: Number,
+    shippingMethod: String,
+    paymentMethod: String,
+    status: {
+      type: String,
+      enum: ["pending", "paid", "canceled", "failed"],
+      default: "pending",
+    },
+    customer: {
+      name: String,
+      email: String,
+      phone: String,
+      address: {
+        street: String,
+        city: String,
+        country: String,
+      },
+    },
   },
-  status: { type: String, enum: ["pending", "paid", "failed"], default: "pending" },
-  createdAt: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
-export default mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema);
+export const Order = models.Order || model("Order", orderSchema);
