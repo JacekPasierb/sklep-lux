@@ -1,10 +1,12 @@
 import { useState } from "react";
 import styles from "./LoginForm.module.css";
+import { useUser } from "../../hooks/useUser";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const {user} = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +23,8 @@ export default function LoginForm() {
 
     if (res.status === 200) {
       setMessage("Logged in successfully!");
+      console.log("uS",user);
+      
     } else {
       setMessage(data.message || "Something went wrong!");
     }

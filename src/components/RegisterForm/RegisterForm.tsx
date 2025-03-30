@@ -1,12 +1,18 @@
 import { useState } from "react";
 import styles from "./RegisterForm.module.css";
+import { useUser } from "../../hooks/useUser";
 
-export default function RegisterForm() {
+interface RegisterFormProps {
+  setIsRegister: (value: boolean) => void;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ setIsRegister }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const {user} = useUser();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -22,6 +28,7 @@ export default function RegisterForm() {
 
     if (res.status === 201) {
       setMessage("User registered successfully!");
+      setIsRegister(false);
     } else {
       setMessage(data.message || "Something went wrong!");
     }
@@ -61,4 +68,6 @@ export default function RegisterForm() {
       {message && <p className={styles.message}>{message}</p>}
     </div>
   );
-}
+};
+
+export default RegisterForm;

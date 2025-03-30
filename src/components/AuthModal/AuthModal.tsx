@@ -4,6 +4,8 @@ import {useCallback, useEffect, useState} from "react";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import LoginForm from "../LoginForm/LoginForm";
 import style from "./AuthModal.module.css";
+import {useUser} from "../../hooks/useUser";
+import UserPanel from "../UserPanel/UserPanel";
 
 const AuthModal = ({
   isOpen,
@@ -15,6 +17,7 @@ const AuthModal = ({
   const [isRegister, setIsRegister] = useState(true); // Stan przełączający formularz logowania / rejestracji
   const [show, setShow] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
+  const {user} = useUser();
 
   const escHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -77,18 +80,31 @@ const AuthModal = ({
         <button onClick={handleClose} className={style.closeButton}>
           X
         </button>
-        <h2>{isRegister ? "Utwórz Konto" : "Logowanie"}</h2>
-
-        {/* Formularz rejestracji lub logowania */}
-        {isRegister ? <RegisterForm /> : <LoginForm />}
-
-     
-         
-          
-          <button onClick={() => setIsRegister(!isRegister)} className={style.btnRedirect}>
-          {isRegister ? "Przejdź do logowania" : "Utwórz konto"}
-          </button>
-        
+        {user && (
+          <>
+            {" "}
+            <div style={{padding: "2rem"}}>
+              <UserPanel />
+            </div>
+          </>
+        )}
+        {!user && (
+          <>
+            <h2>{isRegister ? "Utwórz Konto" : "Logowanie"}</h2>
+            {/* Formularz rejestracji lub logowania */}
+            {isRegister ? (
+              <RegisterForm setIsRegister={setIsRegister} />
+            ) : (
+              <LoginForm />
+            )}
+            <button
+              onClick={() => setIsRegister(!isRegister)}
+              className={style.btnRedirect}
+            >
+              {isRegister ? "Przejdź do logowania" : "Utwórz konto"}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

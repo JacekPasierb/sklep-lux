@@ -119,6 +119,7 @@ export default function CartModal({
           cart: cartItems,
           formData,
           extOrderId,
+          userId: user?._id || null,
         }),
       });
 
