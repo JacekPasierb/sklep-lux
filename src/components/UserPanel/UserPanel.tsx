@@ -15,16 +15,16 @@ export default function UserPanel() {
   const { user, logout } = useUser();
   const [orders, setOrders] = useState<Order[]>([]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (user?._id) {
-        const res = await fetch(`/api/orders/user/${user._id}`);
-        const data = await res.json();
-        setOrders(data.orders);
-      }
-    };
-    fetchOrders();
-  }, [user]);
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     if (user?._id) {
+  //       const res = await fetch(`/api/orders/user/${user._id}`);
+  //       const data = await res.json();
+  //       setOrders(data.orders);
+  //     }
+  //   };
+  //   fetchOrders();
+  // }, [user]);
 
   if (!user) return <p>Musisz być zalogowany</p>;
 
