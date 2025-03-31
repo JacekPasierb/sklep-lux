@@ -1,7 +1,6 @@
 "use client";
 
 import {useSelector, useDispatch} from "react-redux";
-import {RootState} from "@/redux/store";
 import {v4 as uuidv4} from "uuid";
 
 import {
@@ -15,6 +14,7 @@ import styles from "./CartModal.module.css";
 import Image from "next/image";
 import {toast} from "react-toastify";
 import {useUser} from "../../hooks/useUser";
+import { selectCartItems } from "../../redux/cart/selectors";
 
 export default function CartModal({
   isOpen,
@@ -25,7 +25,7 @@ export default function CartModal({
   closeModal: () => void;
   forceStep?: "success" | null;
 }) {
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const {user} = useUser();
   const [isRendered, setIsRendered] = useState(false);
@@ -33,6 +33,8 @@ export default function CartModal({
   const [step, setStep] = useState<"cart" | "form" | "payment" | "success">(
     "cart"
   );
+  const [localCartItems, setLocalCartItems] = useState(cartItems);
+
   const extOrderId = uuidv4();
 
   const [formData, setFormData] = useState({
@@ -66,16 +68,34 @@ export default function CartModal({
       return;
     }
 
-    
-
     setStep("success");
     dispatch(clearCart());
   };
+
   useEffect(() => {
     if (forceStep) {
       setStep(forceStep);
     }
   }, [forceStep]);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (user?._id) {
+        try {
+          const res = await fetch("/api/user/cart");
+          const data = await res.json();
+          setLocalCartItems(data.cart); // 🟢 z backendu
+        } catch (err) {
+          console.error("Błąd podczas pobierania koszyka:", err);
+          toast.error("Nie udało się załadować koszyka");
+        }
+      } else {
+        setLocalCartItems(cartItems); // 🔵 z Redux
+      }
+    };
+
+    fetchCart();
+  }, [user, cartItems]);
 
   useEffect(() => {
     if (isOpen) {
@@ -96,7 +116,7 @@ export default function CartModal({
 
   if (!isRendered) return null;
 
-  const total = cartItems.reduce(
+  const total = localCartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -116,7 +136,7 @@ export default function CartModal({
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          cart: cartItems,
+          cart: localCartItems,
           formData,
           extOrderId,
           userId: user?._id || null,
@@ -127,7 +147,6 @@ export default function CartModal({
 
       if (data.redirectUri) {
         window.location.href = data.redirectUri;
-        
       } else {
         toast.error("Nie udało się przekierować do płatności.");
       }
@@ -160,12 +179,12 @@ export default function CartModal({
 
         {step === "cart" && (
           <>
-            {cartItems.length === 0 ? (
+            {localCartItems.length === 0 ? (
               <p className={styles.empty}>Koszyk jest pusty</p>
             ) : (
               <>
                 <ul className={styles.items}>
-                  {cartItems.map((item) => (
+                  {localCartItems.map((item) => (
                     <li key={item.id} className={styles.item}>
                       <Image
                         src={item.image}

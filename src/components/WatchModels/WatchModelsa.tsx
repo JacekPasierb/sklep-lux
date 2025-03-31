@@ -6,8 +6,8 @@ import Image from "next/image";
 import {useScrollSpy} from "@/hooks/useScrollSpy";
 import {useUser} from "@/hooks/useUser";
 import {toast} from "react-toastify";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/cart/cartSlice";
+import {useDispatch} from "react-redux";
+import {addToCart} from "../../redux/cart/cartSlice";
 
 export const WatchModelsa = () => {
   const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
@@ -25,13 +25,22 @@ export const WatchModelsa = () => {
     id: string;
     name: string;
     price: number;
-    image:string;
+    image: string;
   }) => {
+    console.log("start");
+
     if (!isLoggedIn) {
       dispatch(addToCart(product));
       toast.success("Dodano produkt do lokalnego koszyka!");
       return;
     }
+    console.log("login", product);
+
+    const res = await fetch("/api/user/cart/add", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({product}),
+    });
 
     // 🔸 Tu później dodamy fetch do /api/cart/add
     toast.success(`Dodano ${product.name} do koszyka!`);
@@ -158,7 +167,7 @@ export const WatchModelsa = () => {
                                 id: "watch1",
                                 name: "LuxeNova",
                                 price: 1999,
-                                 image: "/images/watch1.jpg"
+                                image: "/images/watch1.jpg",
                               })
                             }
                           >
@@ -212,7 +221,7 @@ export const WatchModelsa = () => {
                                 id: "watch2",
                                 name: "Prestige",
                                 price: 4999,
-                               image: "/images/watch2.jpg"
+                                image: "/images/watch2.jpg",
                               })
                             }
                           >
@@ -266,7 +275,7 @@ export const WatchModelsa = () => {
                                 id: "watch3",
                                 name: "Titan",
                                 price: 6999,
-                                 image: "/images/watch3.jpg"
+                                image: "/images/watch3.jpg",
                               })
                             }
                           >
