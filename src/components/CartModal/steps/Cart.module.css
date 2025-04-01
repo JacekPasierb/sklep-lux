@@ -1,0 +1,154 @@
+.empty {
+  text-align: center;
+  font-style: italic;
+  color: #eee;
+  margin-top: 60px;
+  font-size: 1.1rem;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  gap: 14px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  color: #fff;
+  flex-direction: row;
+}
+
+.item button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #c29d5d;
+  cursor: pointer;
+}
+
+.thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.itemDetails {
+  font-size: 0.95rem;
+  color: #ccc;
+  flex: 1;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controlBtn {
+  background-color: transparent;
+  border: 1px solid #c29d5d;
+  color: #c29d5d;
+  padding: 2px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.controlBtn:hover {
+  background-color: #c29d5d;
+  color: white;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #c29d5d;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.removeBtn:hover {
+  color: red;
+}
+
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.footer p {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+
+.checkout {
+    background-color: #c29d5d;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .checkout:hover {
+    background-color: #af8e4d;
+  }
+
+  .clear {
+    background-color: transparent;
+    color: #c29d5d;
+    border: 1px solid #c29d5d;
+    padding: 8px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
+  .clear:hover {
+    background-color: #c29d5d;
+    color: white;
+  }

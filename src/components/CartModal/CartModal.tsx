@@ -2,29 +2,21 @@
 
 import {useSelector, useDispatch} from "react-redux";
 import {v4 as uuidv4} from "uuid";
-
-import {
-  clearCart,
-  decrementQuantity,
-  incrementQuantity,
-  removeFromCart,
-} from "@/redux/cart/cartSlice";
 import {useEffect, useState} from "react";
-import styles from "./CartModal.module.css";
-import Image from "next/image";
 import {toast} from "react-toastify";
 import {useUser} from "../../hooks/useUser";
-import { selectCartItems } from "../../redux/cart/selectors";
+import {clearCart} from "@/redux/cart/cartSlice";
+import {selectCartItems} from "../../redux/cart/selectors";
+import styles from "./CartModal.module.css";
+import Cart from "./steps/Cart";
 
-export default function CartModal({
-  isOpen,
-  closeModal,
-  forceStep,
-}: {
+interface CartModalProps {
   isOpen: boolean;
   closeModal: () => void;
   forceStep?: "success" | null;
-}) {
+}
+
+const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const {user} = useUser();
@@ -44,7 +36,7 @@ export default function CartModal({
     city: "",
     email: "",
     phone: "",
-    shipping: "kurier", // domyślnie
+    shipping: "kurier",
     payment: "przelew",
   });
 
@@ -55,20 +47,39 @@ export default function CartModal({
 
   const handleOrderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (
-      !formData.name ||
-      !formData.street ||
-      !formData.email ||
-      !formData.country ||
-      !formData.city ||
-      !formData.phone
-    ) {
-      toast.error("Uzupełnij wszystkie dane");
-      return;
-    }
-
+    const isEmpty = Object.values(formData).some((val) => !val);
+    if (isEmpty) return toast.error("Uzupełnij wszystkie dane");
     setStep("success");
+    dispatch(clearCart());
+  };
+
+  const handlePay = async () => {
+    try {
+      const response = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          cart: localCartItems,
+          formData,
+          extOrderId,
+          userId: user?._id || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.redirectUri) window.location.href = data.redirectUri;
+      else toast.error("Nie udało się przekierować do płatności.");
+    } catch (error) {
+      toast.error("Błąd podczas tworzenia zamówienia.");
+      console.error(error);
+    }
+  };
+
+  const closeEnd = () => {
+    closeModal();
+    setStep("cart");
+    setShow(false);
     dispatch(clearCart());
   };
 
@@ -84,13 +95,13 @@ export default function CartModal({
         try {
           const res = await fetch("/api/user/cart");
           const data = await res.json();
-          setLocalCartItems(data.cart); // 🟢 z backendu
+          setLocalCartItems(data.cart);
         } catch (err) {
           console.error("Błąd podczas pobierania koszyka:", err);
           toast.error("Nie udało się załadować koszyka");
         }
       } else {
-        setLocalCartItems(cartItems); // 🔵 z Redux
+        setLocalCartItems(cartItems);
       }
     };
 
@@ -109,12 +120,8 @@ export default function CartModal({
   }, [isOpen]);
 
   const handleTransitionEnd = () => {
-    if (!show) {
-      setIsRendered(false);
-    }
+    if (!show) setIsRendered(false);
   };
-
-  if (!isRendered) return null;
 
   const total = localCartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -130,37 +137,7 @@ export default function CartModal({
 
   const finalTotal = total + shippingCost;
 
-  const handlePay = async () => {
-    try {
-      const response = await fetch("/api/payment/create-order", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          cart: localCartItems,
-          formData,
-          extOrderId,
-          userId: user?._id || null,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.redirectUri) {
-        window.location.href = data.redirectUri;
-      } else {
-        toast.error("Nie udało się przekierować do płatności.");
-      }
-    } catch (error) {
-      toast.error("Błąd podczas tworzenia zamówienia.");
-      console.error(error);
-    }
-  };
-  const closeEnd = () => {
-    closeModal();
-    setStep("cart");
-    setShow(false);
-    dispatch(clearCart());
-  };
+  if (!isRendered) return null;
 
   return (
     <div className={styles.modal}>
@@ -178,80 +155,11 @@ export default function CartModal({
         </h2>
 
         {step === "cart" && (
-          <>
-            {localCartItems.length === 0 ? (
-              <p className={styles.empty}>Koszyk jest pusty</p>
-            ) : (
-              <>
-                <ul className={styles.items}>
-                  {localCartItems.map((item) => (
-                    <li key={item.id} className={styles.item}>
-                      <Image
-                        src={item.image}
-                        width={50}
-                        height={50}
-                        className={styles.thumb}
-                        alt={item.name}
-                      />
-
-                      <div className={styles.itemDetails}>
-                        <div className={styles.topRow}>
-                          <strong>{item.name}</strong>
-                          <span>{item.price * item.quantity} zł</span>
-                        </div>
-
-                        <div className={styles.bottomRow}>
-                          <div className={styles.quantityControls}>
-                            <button
-                              onClick={() =>
-                                dispatch(decrementQuantity(item.id))
-                              }
-                              className={styles.controlBtn}
-                            >
-                              −
-                            </button>
-                            <span>{item.quantity}</span>
-                            <button
-                              onClick={() =>
-                                dispatch(incrementQuantity(item.id))
-                              }
-                              className={styles.controlBtn}
-                            >
-                              +
-                            </button>
-                          </div>
-
-                          <button
-                            onClick={() => dispatch(removeFromCart(item.id))}
-                            className={styles.removeBtn}
-                            title="Usuń produkt"
-                          >
-                            🗑️
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className={styles.footer}>
-                  <p>Suma: {total} zł</p>
-                  <button
-                    className={styles.checkout}
-                    onClick={() => setStep("form")}
-                  >
-                    Przejdź do kasy
-                  </button>
-                  <button
-                    className={styles.clear}
-                    onClick={() => dispatch(clearCart())}
-                  >
-                    Wyczyść koszyk
-                  </button>
-                </div>
-              </>
-            )}
-          </>
+          <Cart
+            localCartItems={localCartItems}
+            setStep={setStep}
+            total={total}
+          />
         )}
 
         {step === "form" && (
@@ -315,6 +223,7 @@ export default function CartModal({
             </button>
           </form>
         )}
+
         {step === "payment" && (
           <div className={styles.paymentStep}>
             <div className={styles.shippingWrapper}>
@@ -388,4 +297,6 @@ export default function CartModal({
       </div>
     </div>
   );
-}
+};
+
+export default CartModal;

@@ -3,14 +3,9 @@ import { parse } from "cookie";
 import jwt from "jsonwebtoken";
 import { connectToDatabase } from "@/lib/mongoose";
 import { User } from "@/models/User";
+import { CartItem } from "../../../../types/cart";
 
-export type CartItem = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-};
+
 
 export type UserWithCart = {
   _id: string;

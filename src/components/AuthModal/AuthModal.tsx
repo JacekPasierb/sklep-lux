@@ -1,5 +1,3 @@
-// components/AuthModal.tsx
-
 import {useCallback, useEffect, useState} from "react";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import LoginForm from "../LoginForm/LoginForm";
@@ -7,13 +5,12 @@ import style from "./AuthModal.module.css";
 import {useUser} from "../../hooks/useUser";
 import UserPanel from "../UserPanel/UserPanel";
 
-const AuthModal = ({
-  isOpen,
-  closeModal,
-}: {
+interface AuthModalProps {
   isOpen: boolean;
   closeModal: () => void;
-}) => {
+}
+
+const AuthModal = ({isOpen, closeModal}: AuthModalProps) => {
   const [isRegister, setIsRegister] = useState(true); // Stan przełączający formularz logowania / rejestracji
   const [show, setShow] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
@@ -21,33 +18,31 @@ const AuthModal = ({
 
   const escHandler = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
+      if (e.key === "Escape") closeModal();
     },
     [closeModal]
   );
+
   useEffect(() => {
     if (isOpen) {
       setIsRendered(true);
 
-      // 💡 podwójny requestAnimationFrame, żeby dać czas przeglądarce
+      //  podwójny requestAnimationFrame, żeby dać czas przeglądarce
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setShow(true);
         });
       });
 
-      // 👉 zablokuj scroll
       document.body.style.overflow = "hidden";
 
-      // 👉 nasłuchiwanie ESC
       window.addEventListener("keydown", escHandler);
     } else {
-      setShow(false); // animacja wyjścia
-      document.body.style.overflow = ""; // przywróć scroll
+      setShow(false);
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", escHandler);
     }
+
     return () => {
       window.removeEventListener("keydown", escHandler);
       document.body.style.overflow = "";
@@ -55,21 +50,20 @@ const AuthModal = ({
   }, [isOpen, escHandler]);
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
+    if (e.target === e.currentTarget) closeModal();
   };
+
   const handleTransitionEnd = () => {
     if (!show) {
       setIsRendered(false);
     }
   };
 
-  if (!isRendered) return null;
-
   const handleClose = () => {
     closeModal();
   };
+
+  if (!isRendered) return null;
 
   return (
     <div className={style.modal} onClick={handleBackdropClick}>
@@ -80,18 +74,16 @@ const AuthModal = ({
         <button onClick={handleClose} className={style.closeButton}>
           X
         </button>
-        {user && (
+        {user ? (
           <>
-            {" "}
             <div style={{padding: "2rem"}}>
               <UserPanel />
             </div>
           </>
-        )}
-        {!user && (
+        ) : (
           <>
             <h2>{isRegister ? "Utwórz Konto" : "Logowanie"}</h2>
-            {/* Formularz rejestracji lub logowania */}
+
             {isRegister ? (
               <RegisterForm setIsRegister={setIsRegister} />
             ) : (
