@@ -1,0 +1,17 @@
+.checkout {
+    background-color: #c29d5d;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .checkout:hover {
+    background-color: #af8e4d;
+  }

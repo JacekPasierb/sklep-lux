@@ -6,7 +6,7 @@ interface FooterProps {
   isSmallMobile: boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ isSmallMobile }) => {
+const Footer: React.FC<FooterProps> = ({isSmallMobile}) => {
   return (
     <div className={styles.footerSection}>
       {isSmallMobile && (
@@ -49,26 +49,3 @@ const Footer: React.FC<FooterProps> = ({ isSmallMobile }) => {
 };
 
 export default Footer;
-//   return (
-
-//     <div className={styles.footerSection}>
-//         <div className={styles.imageWrapper}>
-//       <Image
-//         src="/images/watch4.png"
-//         alt="Ekskluzywny zegarek"
-//         width={160}
-//         height={120}
-//         className={styles.image}
-//       /></div>
-//       <div className={styles.box}>
-//         <p className={styles.logo}>WATCH</p> <div className={styles.line}></div>
-//       </div>
-//       <div className={styles.imageWrapper}>
-//      <h3>Ekskluzywna Kolekcja Zegarków</h3>
-//      <p>Zegarki, które wyznaczają nowe standardy elegancji i precyzji. Innowacyjne mechanizmy oraz ponadczasowy design sprawiają, że każdy model jest wyjątkowy.</p>
-//      </div>
-//     </div>
-//   );
-// };
-
-// export default Footer;

@@ -12,8 +12,8 @@ const Features = () => {
               src="/icons/design-icon.png"
               alt="Design"
               className={styles.featureIcon}
-              width={50} // Ustaw szerokość
-              height={50} // Ustaw wysokość
+              width={50} 
+              height={50} 
             />
             <h3>Nowoczesny Design</h3>
             <p>Elegancki, minimalistyczny wygląd, który wyróżnia się na tle innych zegarków.</p>
@@ -23,8 +23,8 @@ const Features = () => {
               src="/icons/durability-icon.png"
               alt="Durability"
               className={styles.featureIcon}
-              width={50} // Ustaw szerokość
-              height={50} // Ustaw wysokość
+              width={50} 
+              height={50} 
             />
             <h3>Wytrzymałość</h3>
             <p>Nasze zegarki zostały stworzone z najwyższej jakości materiałów, gwarantujących trwałość.</p>
@@ -34,8 +34,8 @@ const Features = () => {
               src="/icons/technology-icon.png"
               alt="Technology"
               className={styles.featureIcon}
-              width={50} // Ustaw szerokość
-              height={50} // Ustaw wysokość
+              width={50} 
+              height={50} 
             />
             <h3>Nowoczesna Technologia</h3>
             <p>Innowacyjne mechanizmy zegarków zapewniają precyzyjny pomiar czasu oraz wygodę noszenia.</p>
@@ -45,8 +45,8 @@ const Features = () => {
               src="/icons/waterproof-icon.png"
               alt="Waterproof"
               className={styles.featureIcon}
-              width={50} // Ustaw szerokość
-              height={50} // Ustaw wysokość
+              width={50} 
+              height={50} 
             />
             <h3>Wodoodporność</h3>
             <p>Zegarki zapewniają odporność na wodę i deszcz, co czyni je idealnym wyborem na każdą okazję.</p>

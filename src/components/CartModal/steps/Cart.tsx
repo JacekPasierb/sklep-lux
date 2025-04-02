@@ -9,15 +9,115 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "../../../redux/cart/cartSlice";
+import BackBtn from "../../Buttons/BackBtn/BackBtn";
+import NextBtn from "../../Buttons/NextBtn/NextBtn";
+import CtrlBtn from "../../Buttons/CtrlBtn/CtrlBtn";
+import DelBtn from "../../Buttons/DelBtn/DelBtn";
+import {toast} from "react-toastify";
+import {useUser} from "../../../hooks/useUser";
 
 interface CartProps {
   localCartItems: CartItem[];
   setStep: (step: "form") => void;
   total: number;
+  setLocalCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
 }
 
-const Cart = ({localCartItems, setStep, total}: CartProps) => {
+const Cart = ({
+  localCartItems,
+  setStep,
+  total,
+  setLocalCartItems,
+}: CartProps) => {
   const dispatch = useDispatch();
+  const {user} = useUser();
+
+  const refreshCartFromDb = async () => {
+    try {
+      const res = await fetch("/api/user/cart");
+      const data = await res.json();
+      setLocalCartItems(data.cart);
+    } catch (error) {
+      toast.error("Nie udało się odświeżyć koszyka");
+      console.error("Błąd odświeżania koszyka:", error);
+    }
+  };
+
+  const handleIncrement = async (id: string) => {
+    if (user?._id) {
+      try {
+        const res = await fetch("/api/user/cart/increment", {
+          method: "PATCH",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({productId: id}),
+        });
+
+        if (!res.ok) throw new Error();
+        await refreshCartFromDb();
+      } catch {
+        toast.error("Błąd zwiększania ilości");
+      }
+    } else {
+      dispatch(incrementQuantity(id));
+    }
+  };
+
+  const handleDecrement = async (id: string) => {
+    if (user?._id) {
+      try {
+        const res = await fetch("/api/user/cart/decrement", {
+          method: "PATCH",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({productId: id}),
+        });
+
+        if (!res.ok) throw new Error();
+        await refreshCartFromDb();
+      } catch {
+        toast.error("Błąd zmniejszania ilości");
+      }
+    } else {
+      dispatch(decrementQuantity(id));
+    }
+  };
+
+  const handleRemove = async (id: string) => {
+    if (user?._id) {
+      try {
+        const res = await fetch("/api/user/cart/remove", {
+          method: "DELETE",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({productId: id}),
+        });
+
+        if (!res.ok) throw new Error();
+        await refreshCartFromDb();
+      } catch {
+        toast.error("Błąd usuwania produktu");
+      }
+    } else {
+      dispatch(removeFromCart(id));
+    }
+  };
+
+  const handleClearCart = async () => {
+    if (user?._id) {
+      try {
+        const res = await fetch("/api/user/cart/clear", {
+          method: "DELETE",
+        });
+
+        if (!res.ok) throw new Error();
+
+        await refreshCartFromDb();
+      } catch (err) {
+        toast.error("Błąd podczas czyszczenia koszyka");
+        console.error(err);
+      }
+    } else {
+      dispatch(clearCart());
+    }
+  };
 
   return (
     <>
@@ -44,28 +144,18 @@ const Cart = ({localCartItems, setStep, total}: CartProps) => {
 
                   <div className={styles.bottomRow}>
                     <div className={styles.quantityControls}>
-                      <button
-                        onClick={() => dispatch(decrementQuantity(item.id))}
-                        className={styles.controlBtn}
-                      >
-                        −
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button
-                        onClick={() => dispatch(incrementQuantity(item.id))}
-                        className={styles.controlBtn}
-                      >
-                        +
-                      </button>
-                    </div>
+                      <CtrlBtn
+                        text={"-"}
+                        click={() => handleDecrement(item.id)}
+                      />
 
-                    <button
-                      onClick={() => dispatch(removeFromCart(item.id))}
-                      className={styles.removeBtn}
-                      title="Usuń produkt"
-                    >
-                      🗑️
-                    </button>
+                      <span>{item.quantity}</span>
+                      <CtrlBtn
+                        text={"+"}
+                        click={() => handleIncrement(item.id)}
+                      />
+                    </div>
+                    <DelBtn click={() => handleRemove(item.id)} />
                   </div>
                 </div>
               </li>
@@ -74,15 +164,9 @@ const Cart = ({localCartItems, setStep, total}: CartProps) => {
 
           <div className={styles.footer}>
             <p>Suma: {total} zł</p>
-            <button className={styles.checkout} onClick={() => setStep("form")}>
-              Przejdź do kasy
-            </button>
-            <button
-              className={styles.clear}
-              onClick={() => dispatch(clearCart())}
-            >
-              Wyczyść koszyk
-            </button>
+
+            <NextBtn text={"Przejdź do kasy"} click={() => setStep("form")} />
+            <BackBtn text={"Wyczyść koszyk"} click={handleClearCart} />
           </div>
         </>
       )}

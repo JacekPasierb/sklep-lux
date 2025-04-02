@@ -1,17 +1,22 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
-import styles from './DiscountForm.module.css';
+import {useState} from "react";
+import styles from "./DiscountForm.module.css";
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+}
 
 const DiscountForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: "",
+    email: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -19,24 +24,24 @@ const DiscountForm = () => {
   };
 
   const validate = () => {
-    const errors = {};
+    const errors: FormErrors = {};
     if (!formData.name) {
-      errors.name = 'Imię jest wymagane';
+      errors.name = "Imię jest wymagane";
     }
     if (!formData.email) {
-      errors.email = 'E-mail jest wymagany';
+      errors.email = "E-mail jest wymagany";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Podaj poprawny adres e-mail';
+      errors.email = "Podaj poprawny adres e-mail";
     }
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formErrors = validate();
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
-      alert('Formularz wysłany');
+      alert("Formularz wysłany");
       // Prześlij dane na backend lub do systemu
     }
   };
@@ -46,7 +51,8 @@ const DiscountForm = () => {
       <div className={styles.formWrapper}>
         <h2 className={styles.formTitle}>Otrzymaj 5% zniżki</h2>
         <p className={styles.formDescription}>
-          Za zapis na newsletter otrzymasz 5% zniżki na pierwsze zakupy oraz jako pierwszy(a) dowiesz się o nowościach i promocjach.
+          Za zapis na newsletter otrzymasz 5% zniżki na pierwsze zakupy oraz
+          jako pierwszy(a) dowiesz się o nowościach i promocjach.
         </p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
@@ -57,7 +63,9 @@ const DiscountForm = () => {
             onChange={handleChange}
             className={styles.inputField}
           />
-          {errors.name && <div className={styles.errorMessage}>{errors.name}</div>}
+          {errors.name && (
+            <div className={styles.errorMessage}>{errors.name}</div>
+          )}
 
           <input
             type="email"
@@ -67,7 +75,9 @@ const DiscountForm = () => {
             onChange={handleChange}
             className={styles.inputField}
           />
-          {errors.email && <div className={styles.errorMessage}>{errors.email}</div>}
+          {errors.email && (
+            <div className={styles.errorMessage}>{errors.email}</div>
+          )}
 
           <button type="submit" className={styles.submitButton}>
             Zapisz się

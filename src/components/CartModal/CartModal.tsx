@@ -9,6 +9,9 @@ import {clearCart} from "@/redux/cart/cartSlice";
 import {selectCartItems} from "../../redux/cart/selectors";
 import styles from "./CartModal.module.css";
 import Cart from "./steps/Cart";
+import NextBtn from "../Buttons/NextBtn/NextBtn";
+import CartForm from "./steps/CartForm";
+import CartPayment from "./steps/CartPayment";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -157,141 +160,38 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
         {step === "cart" && (
           <Cart
             localCartItems={localCartItems}
+            setLocalCartItems={setLocalCartItems} 
             setStep={setStep}
             total={total}
           />
         )}
 
         {step === "form" && (
-          <form className={styles.form} onSubmit={handleOrderSubmit}>
-            <input
-              name="name"
-              placeholder="Imię i nazwisko"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="street"
-              placeholder="Ulica i numer domu"
-              value={formData.street}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="country"
-              placeholder="Kraj"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="city"
-              placeholder="Miasto"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="email"
-              placeholder="E-mail"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="phone"
-              placeholder="Numer Telefonu"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-
-            <button
-              onClick={() => setStep("payment")}
-              className={styles.checkout}
-            >
-              Przejdz do podsumowania
-            </button>
-            <button
-              type="button"
-              className={styles.clear}
-              onClick={() => setStep("cart")}
-            >
-              Wróć do koszyka
-            </button>
-          </form>
+          <CartForm
+            formData={formData}
+            setFormData={setFormData}
+            setStep={setStep}
+            handleOrderSubmit={handleOrderSubmit}
+          />
         )}
 
         {step === "payment" && (
-          <div className={styles.paymentStep}>
-            <div className={styles.shippingWrapper}>
-              <h4 className={styles.sectionTitle}>Metoda dostawy</h4>
-              <label className={styles.radioLabel}>
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="kurier"
-                  checked={formData.shipping === "kurier"}
-                  onChange={handleChange}
-                />
-                Kurier (+20 zł)
-              </label>
-              <label className={styles.radioLabel}>
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="paczkomat"
-                  checked={formData.shipping === "paczkomat"}
-                  onChange={handleChange}
-                />
-                Paczkomat (+15 zł)
-              </label>
-              <label className={styles.radioLabel}>
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="odbior"
-                  checked={formData.shipping === "odbior"}
-                  onChange={handleChange}
-                />
-                Odbiór osobisty (0 zł)
-              </label>
-            </div>
-
-            <div className={styles.summary}>
-              <p>Suma produktów: {total} zł</p>
-              <p>Dostawa: {shippingCost} zł</p>
-              <p>
-                <strong>Razem: {finalTotal} zł</strong>
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              className={styles.checkout}
-              onClick={handlePay}
-            >
-              Zamawiam i płacę
-            </button>
-            <button
-              type="button"
-              className={styles.clear}
-              onClick={() => setStep("form")}
-            >
-              Wstecz
-            </button>
-          </div>
+          <CartPayment
+            formData={formData}
+            handleChange={handleChange}
+            total={total}
+            finalTotal={finalTotal}
+            shippingCost={shippingCost}
+            handlePay={handlePay}
+            setStep={setStep}
+          />
         )}
 
         {step === "success" && (
           <div className={styles.success}>
             <h3>Dziękujemy za zamówienie! ✨</h3>
             <p>Na podany e-mail zostanie wysłane potwierdzenie.</p>
-            <button onClick={closeEnd} className={styles.checkout}>
-              Zamknij
-            </button>
+            <NextBtn text={"Zamknij"} click={closeEnd} />
           </div>
         )}
       </div>

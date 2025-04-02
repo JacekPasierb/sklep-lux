@@ -76,21 +76,7 @@
   gap: 6px;
 }
 
-.controlBtn {
-  background-color: transparent;
-  border: 1px solid #c29d5d;
-  color: #c29d5d;
-  padding: 2px 8px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: background-color 0.2s ease;
-}
 
-.controlBtn:hover {
-  background-color: #c29d5d;
-  color: white;
-}
 
 .removeBtn {
   background: none;

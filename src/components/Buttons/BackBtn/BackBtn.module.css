@@ -1,0 +1,16 @@
+.clear {
+    background-color: transparent;
+    color: #c29d5d;
+    border: 1px solid #c29d5d;
+    padding: 8px;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
+  .clear:hover {
+    background-color: #c29d5d;
+    color: white;
+  }
