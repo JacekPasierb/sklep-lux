@@ -1,5 +1,4 @@
 import React from "react";
-import {CartItem} from "../../../types/cart";
 import styles from "./Cart.module.css";
 import Image from "next/image";
 import {useDispatch} from "react-redux";
@@ -15,33 +14,23 @@ import CtrlBtn from "../../Buttons/CtrlBtn/CtrlBtn";
 import DelBtn from "../../Buttons/DelBtn/DelBtn";
 import {toast} from "react-toastify";
 import {useUser} from "../../../hooks/useUser";
+import { useCart } from "../../../context/CartContext";
+import { CartItem } from "../../../types/cart";
+
 
 interface CartProps {
-  localCartItems: CartItem[];
   setStep: (step: "form") => void;
   total: number;
-  setLocalCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  cartItems:CartItem[];
 }
 
-const Cart = ({
-  localCartItems,
-  setStep,
-  total,
-  setLocalCartItems,
-}: CartProps) => {
+const Cart = ({setStep, total,cartItems}: CartProps) => {
   const dispatch = useDispatch();
   const {user} = useUser();
+  const {  fetchCart } = useCart();
 
-  const refreshCartFromDb = async () => {
-    try {
-      const res = await fetch("/api/user/cart");
-      const data = await res.json();
-      setLocalCartItems(data.cart);
-    } catch (error) {
-      toast.error("Nie udało się odświeżyć koszyka");
-      console.error("Błąd odświeżania koszyka:", error);
-    }
-  };
+
+
 
   const handleIncrement = async (id: string) => {
     if (user?._id) {
@@ -53,7 +42,7 @@ const Cart = ({
         });
 
         if (!res.ok) throw new Error();
-        await refreshCartFromDb();
+        await fetchCart();
       } catch {
         toast.error("Błąd zwiększania ilości");
       }
@@ -72,7 +61,7 @@ const Cart = ({
         });
 
         if (!res.ok) throw new Error();
-        await refreshCartFromDb();
+        await fetchCart();
       } catch {
         toast.error("Błąd zmniejszania ilości");
       }
@@ -91,7 +80,7 @@ const Cart = ({
         });
 
         if (!res.ok) throw new Error();
-        await refreshCartFromDb();
+        await fetchCart();
       } catch {
         toast.error("Błąd usuwania produktu");
       }
@@ -108,8 +97,7 @@ const Cart = ({
         });
 
         if (!res.ok) throw new Error();
-
-        await refreshCartFromDb();
+        await fetchCart();
       } catch (err) {
         toast.error("Błąd podczas czyszczenia koszyka");
         console.error(err);
@@ -119,14 +107,16 @@ const Cart = ({
     }
   };
 
+
+
   return (
     <>
-      {localCartItems.length === 0 ? (
+      {cartItems.length === 0 ? (
         <p className={styles.empty}>Koszyk jest pusty</p>
       ) : (
         <>
           <ul className={styles.items}>
-            {localCartItems.map((item) => (
+            {cartItems.map((item) => (
               <li key={item.id} className={styles.item}>
                 <Image
                   src={item.image}

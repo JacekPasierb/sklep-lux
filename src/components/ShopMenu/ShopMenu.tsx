@@ -3,30 +3,39 @@ import style from "./ShopMenu.module.css";
 import {FaShoppingCart, FaUser} from "react-icons/fa";
 import AuthModal from "../AuthModal/AuthModal";
 import CartModal from "../CartModal/CartModal";
-import { useSelector } from "react-redux";
-import { selectCartCount } from "../../redux/cart/selectors";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import {useSelector} from "react-redux";
+import {selectCartItems} from "../../redux/cart/selectors";
+import {useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
+import {useUser} from "../../hooks/useUser";
+import { useCart } from "../../context/CartContext";
 
 const ShopMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [forceStep, setForceStep] = useState<"success" | null>(null);
 
+  const {user} = useUser();
+  const reduxCartItems = useSelector(selectCartItems);
+
+ 
+
+
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
     const extOrderId = searchParams?.get("order");
-    if (searchParams?.get("payment") === "success" ) {
+    if (searchParams?.get("payment") === "success") {
       fetch("/api/orders/update-status", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ extOrderId}),
+        body: JSON.stringify({extOrderId}),
       });
-      setIsCartOpen(true);         // otwieramy modal
-      setForceStep("success");     // od razu pokazujemy success
-      router.replace("/", { scroll: false }); // czyścimy adres
+      setIsCartOpen(true); // otwieramy modal
+      setForceStep("success"); // od razu pokazujemy success
+      router.replace("/", {scroll: false}); // czyścimy adres
     }
   }, [searchParams, router]);
 
@@ -36,16 +45,29 @@ const ShopMenu = () => {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  const cartCount = useSelector(selectCartCount);
 
+  
+  const { cart: mongoCart } = useCart();
+  // const cartCount = reduxCartItems.reduce((sum, item) => sum + item.quantity, 0);
+    // const cartCount = localCartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = user?._id
+    ? mongoCart.reduce((sum, item) => sum + item.quantity, 0) // jeśli zalogowany -> Mongo
+    : reduxCartItems.reduce((sum, item) => sum + item.quantity, 0);
+  
   return (
     <>
       <div className={style.shopMenu}>
-        <FaShoppingCart onClick={openCart} className={style.icon}/>   <FaUser onClick={openModal} className={style.icon}/>
+        <FaShoppingCart onClick={openCart} className={style.icon} />{" "}
+        <FaUser onClick={openModal} className={style.icon} />
         {cartCount > 0 && <span className={style.badge}>{cartCount}</span>}
       </div>
       <AuthModal isOpen={isModalOpen} closeModal={closeModal} />
-      <CartModal isOpen={isCartOpen} closeModal={closeCart} forceStep={forceStep}/>
+      <CartModal
+        isOpen={isCartOpen}
+        closeModal={closeCart}
+        forceStep={forceStep}
+      
+      />
     </>
   );
 };

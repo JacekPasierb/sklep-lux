@@ -8,6 +8,7 @@ import {useUser} from "@/hooks/useUser";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../../redux/cart/cartSlice";
+import { useCart } from "../../context/CartContext";
 
 export const WatchModelsa = () => {
   const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
@@ -20,6 +21,7 @@ export const WatchModelsa = () => {
 
   const {isLoggedIn} = useUser();
   const dispatch = useDispatch();
+  const { fetchCart } = useCart(); 
 
   const handleAddToCart = async (product: {
     id: string;
@@ -34,16 +36,22 @@ export const WatchModelsa = () => {
       toast.success("Dodano produkt do lokalnego koszyka!");
       return;
     }
-    console.log("login", product);
-
-    const res = await fetch("/api/user/cart/add", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({product}),
-    });
-
-    // 🔸 Tu później dodamy fetch do /api/cart/add
-    toast.success(`Dodano ${product.name} do koszyka!`);
+   
+    try {
+      const res = await fetch("/api/user/cart/add", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ product }),
+      });
+  
+      if (!res.ok) throw new Error();
+  
+      toast.success(`Dodano ${product.name} do koszyka!`);
+  
+      await fetchCart(); // 🟢 odśwież dane w kontekście po dodaniu
+    } catch  {
+      toast.error("Błąd przy dodawaniu produktu");
+    }
   };
 
   useEffect(() => {

@@ -1,17 +1,18 @@
 "use client";
 
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {v4 as uuidv4} from "uuid";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {useUser} from "../../hooks/useUser";
 import {clearCart} from "@/redux/cart/cartSlice";
-import {selectCartItems} from "../../redux/cart/selectors";
 import styles from "./CartModal.module.css";
 import Cart from "./steps/Cart";
 import NextBtn from "../Buttons/NextBtn/NextBtn";
 import CartForm from "./steps/CartForm";
 import CartPayment from "./steps/CartPayment";
+import {useCart} from "../../context/CartContext";
+import {selectCartItems} from "../../redux/cart/selectors";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -20,15 +21,14 @@ interface CartModalProps {
 }
 
 const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
-  const cartItems = useSelector(selectCartItems);
+  const [step, setStep] = useState<"cart" | "form" | "payment" | "success">(
+    "cart"
+  );
+
   const dispatch = useDispatch();
   const {user} = useUser();
   const [isRendered, setIsRendered] = useState(false);
   const [show, setShow] = useState(false);
-  const [step, setStep] = useState<"cart" | "form" | "payment" | "success">(
-    "cart"
-  );
-  const [localCartItems, setLocalCartItems] = useState(cartItems);
 
   const extOrderId = uuidv4();
 
@@ -56,13 +56,18 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     dispatch(clearCart());
   };
 
+  const reduxCartItems = useSelector(selectCartItems);
+  const {cart, fetchCart} = useCart();
+
+  const products = user?._id ? cart : reduxCartItems;
+
   const handlePay = async () => {
     try {
       const response = await fetch("/api/payment/create-order", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          cart: localCartItems,
+          cart: products,
           formData,
           extOrderId,
           userId: user?._id || null,
@@ -79,11 +84,25 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     }
   };
 
-  const closeEnd = () => {
+  const closeEnd = async () => {
     closeModal();
     setStep("cart");
     setShow(false);
-    dispatch(clearCart());
+    if (user?._id) {
+      try {
+        const res = await fetch("/api/user/cart/clear", {
+          method: "DELETE",
+        });
+
+        if (!res.ok) throw new Error();
+        await fetchCart();
+      } catch (err) {
+        toast.error("Błąd podczas czyszczenia koszyka");
+        console.error(err);
+      }
+    } else {
+      dispatch(clearCart());
+    }
   };
 
   useEffect(() => {
@@ -91,25 +110,6 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
       setStep(forceStep);
     }
   }, [forceStep]);
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      if (user?._id) {
-        try {
-          const res = await fetch("/api/user/cart");
-          const data = await res.json();
-          setLocalCartItems(data.cart);
-        } catch (err) {
-          console.error("Błąd podczas pobierania koszyka:", err);
-          toast.error("Nie udało się załadować koszyka");
-        }
-      } else {
-        setLocalCartItems(cartItems);
-      }
-    };
-
-    fetchCart();
-  }, [user, cartItems]);
 
   useEffect(() => {
     if (isOpen) {
@@ -126,7 +126,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     if (!show) setIsRendered(false);
   };
 
-  const total = localCartItems.reduce(
+  const total = products.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -158,12 +158,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
         </h2>
 
         {step === "cart" && (
-          <Cart
-            localCartItems={localCartItems}
-            setLocalCartItems={setLocalCartItems} 
-            setStep={setStep}
-            total={total}
-          />
+          <Cart setStep={setStep} total={total} cartItems={products} />
         )}
 
         {step === "form" && (
