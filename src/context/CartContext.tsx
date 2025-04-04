@@ -30,6 +30,7 @@ export const CartProvider = ({children}: {children: React.ReactNode}) => {
 
   useEffect(() => {
     if (user?._id) fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
