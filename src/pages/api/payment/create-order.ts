@@ -2,8 +2,8 @@
 
 import type {NextApiRequest, NextApiResponse} from "next";
 import {v4 as uuidv4} from "uuid";
-import { connectToDatabase } from "../../../lib/mongoose";
-import { Order } from "../../../models/Order";
+import {connectToDatabase} from "../../../lib/mongoose";
+import {Order} from "../../../models/Order";
 
 const PAYU_CLIENT_ID = process.env.PAYU_CLIENT_ID!;
 const PAYU_CLIENT_SECRET = process.env.PAYU_CLIENT_SECRET!;
@@ -19,7 +19,7 @@ export default async function handler(
   if (req.method !== "POST") return res.status(405).end("Method not allowed");
 
   try {
-    const {cart, formData, userId} = req.body;
+    const {cart, formData, userId, shippingCost} = req.body;
     const extOrderId = uuidv4();
     await connectToDatabase();
     const totalAmount = cart.reduce(
@@ -31,7 +31,7 @@ export default async function handler(
       userId: userId || null,
       extOrderId,
       products: cart,
-      total: totalAmount ,
+      total: totalAmount + shippingCost,
       shippingMethod: formData.shipping,
       paymentMethod: formData.payment,
       status: "pending",
@@ -47,7 +47,6 @@ export default async function handler(
       },
     });
 
-
     // 1. Pobierz token dostępu
     const tokenRes = await fetch(PAYU_AUTH_URL, {
       method: "POST",
@@ -60,8 +59,7 @@ export default async function handler(
     });
 
     const tokenData = await tokenRes.json();
-   
-    
+
     const access_token = tokenData.access_token;
 
     if (!access_token) {
@@ -70,13 +68,13 @@ export default async function handler(
     }
 
     // 2. Przygotuj dane zamówienia
-   
+
     const order = {
       customerIp: "127.0.0.1",
       merchantPosId: PAYU_POS_ID,
       description: "Zamówienie w sklepie luksusowym",
       currencyCode: "PLN",
-      totalAmount: (totalAmount * 100).toString(),
+      totalAmount: (totalAmount * 100 + shippingCost * 100).toString(),
       extOrderId: uuidv4(), // unikalne ID zamówienia
       continueUrl: `http://localhost:3000?payment=success&order=${extOrderId}`,
       notifyUrl: "http://localhost:3000/api/payment/notify",
@@ -93,10 +91,6 @@ export default async function handler(
       })),
     };
 
-   
-
-
-
     // 3. Stwórz zamówienie
     const orderRes = await fetch(PAYU_ORDER_URL, {
       method: "POST",
@@ -107,21 +101,17 @@ export default async function handler(
       body: JSON.stringify(order),
     });
     console.log("pokaz co zwraca order", orderRes);
-   // Upewniamy się, że odpowiedź to JSON
-  
+    // Upewniamy się, że odpowiedź to JSON
 
-  
-   
-   const redirectUri = orderRes.url;
-   
-   if (!redirectUri || !orderRes.ok) {
-     return res.status(500).json({message: "Błąd przy tworzeniu zamówienia w PayU."});
-   }
-   
-   return res.status(200).json({redirectUri});
-   
+    const redirectUri = orderRes.url;
 
-  
+    if (!redirectUri || !orderRes.ok) {
+      return res
+        .status(500)
+        .json({message: "Błąd przy tworzeniu zamówienia w PayU."});
+    }
+
+    return res.status(200).json({redirectUri});
   } catch (err) {
     console.error("PayU Error:", err);
     return res.status(500).json({message: "Błąd przy tworzeniu zamówienia."});

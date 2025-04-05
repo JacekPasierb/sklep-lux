@@ -8,7 +8,8 @@ import {useUser} from "@/hooks/useUser";
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {addToCart} from "../../redux/cart/cartSlice";
-import { useCart } from "../../context/CartContext";
+import {useCart} from "../../context/CartContext";
+import {addProductToCart} from "../../services/cartAPI";
 
 export const WatchModelsa = () => {
   const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
@@ -21,7 +22,7 @@ export const WatchModelsa = () => {
 
   const {isLoggedIn} = useUser();
   const dispatch = useDispatch();
-  const { fetchCart } = useCart(); 
+  const {fetchCart} = useCart();
 
   const handleAddToCart = async (product: {
     id: string;
@@ -29,39 +30,28 @@ export const WatchModelsa = () => {
     price: number;
     image: string;
   }) => {
-    console.log("start");
 
     if (!isLoggedIn) {
       dispatch(addToCart(product));
       toast.success("Dodano produkt do lokalnego koszyka!");
       return;
     }
-   
+
     try {
-      const res = await fetch("/api/user/cart/add", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ product }),
-      });
-  
-      if (!res.ok) throw new Error();
-  
+      await addProductToCart(product);
       toast.success(`Dodano ${product.name} do koszyka!`);
-  
-      await fetchCart(); // 🟢 odśwież dane w kontekście po dodaniu
-    } catch  {
+      await fetchCart();
+    } catch {
       toast.error("Błąd przy dodawaniu produktu");
     }
   };
 
   useEffect(() => {
-    // Create a new IntersectionObserver instance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const id = entry.target.id;
           if (entry.isIntersecting) {
-            // Set the corresponding section to visible
             setVisible((prev) => ({...prev, [id]: true}));
           } else {
             setVisible((prev) => ({...prev, [id]: false}));
@@ -69,11 +59,11 @@ export const WatchModelsa = () => {
         });
       },
       {
-        threshold: 0.6, // Adjust this value for the visibility threshold (e.g., 20% visible)
+        threshold: 0.6, 
       }
     );
 
-    // Observe each section
+  
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
@@ -81,7 +71,7 @@ export const WatchModelsa = () => {
       }
     });
 
-    // Cleanup the observer when component is unmounted
+    
     return () => {
       observer.disconnect();
     };

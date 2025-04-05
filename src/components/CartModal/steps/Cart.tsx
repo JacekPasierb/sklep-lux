@@ -16,6 +16,7 @@ import {toast} from "react-toastify";
 import {useUser} from "../../../hooks/useUser";
 import { useCart } from "../../../context/CartContext";
 import { CartItem } from "../../../types/cart";
+import { clearCartAPI, decrementProductQuantity, incrementProductQuantity, removeProductFromCart } from "../../../services/cartAPI";
 
 
 interface CartProps {
@@ -35,13 +36,7 @@ const Cart = ({setStep, total,cartItems}: CartProps) => {
   const handleIncrement = async (id: string) => {
     if (user?._id) {
       try {
-        const res = await fetch("/api/user/cart/increment", {
-          method: "PATCH",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({productId: id}),
-        });
-
-        if (!res.ok) throw new Error();
+        await incrementProductQuantity(id);
         await fetchCart();
       } catch {
         toast.error("Błąd zwiększania ilości");
@@ -54,13 +49,7 @@ const Cart = ({setStep, total,cartItems}: CartProps) => {
   const handleDecrement = async (id: string) => {
     if (user?._id) {
       try {
-        const res = await fetch("/api/user/cart/decrement", {
-          method: "PATCH",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({productId: id}),
-        });
-
-        if (!res.ok) throw new Error();
+        await decrementProductQuantity(id)
         await fetchCart();
       } catch {
         toast.error("Błąd zmniejszania ilości");
@@ -73,13 +62,7 @@ const Cart = ({setStep, total,cartItems}: CartProps) => {
   const handleRemove = async (id: string) => {
     if (user?._id) {
       try {
-        const res = await fetch("/api/user/cart/remove", {
-          method: "DELETE",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({productId: id}),
-        });
-
-        if (!res.ok) throw new Error();
+        await removeProductFromCart(id)
         await fetchCart();
       } catch {
         toast.error("Błąd usuwania produktu");
@@ -92,11 +75,7 @@ const Cart = ({setStep, total,cartItems}: CartProps) => {
   const handleClearCart = async () => {
     if (user?._id) {
       try {
-        const res = await fetch("/api/user/cart/clear", {
-          method: "DELETE",
-        });
-
-        if (!res.ok) throw new Error();
+        await clearCartAPI()
         await fetchCart();
       } catch (err) {
         toast.error("Błąd podczas czyszczenia koszyka");

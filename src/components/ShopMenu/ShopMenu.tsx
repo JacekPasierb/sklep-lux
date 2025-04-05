@@ -8,7 +8,8 @@ import {selectCartItems} from "../../redux/cart/selectors";
 import {useSearchParams} from "next/navigation";
 import {useRouter} from "next/navigation";
 import {useUser} from "../../hooks/useUser";
-import { useCart } from "../../context/CartContext";
+import {useCart} from "../../context/CartContext";
+import {updateOrderStatus} from "../../services/orderAPI";
 
 const ShopMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,24 +19,21 @@ const ShopMenu = () => {
   const {user} = useUser();
   const reduxCartItems = useSelector(selectCartItems);
 
- 
-
-
-
   const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
     const extOrderId = searchParams?.get("order");
     if (searchParams?.get("payment") === "success") {
-      fetch("/api/orders/update-status", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({extOrderId}),
-      });
-      setIsCartOpen(true); // otwieramy modal
-      setForceStep("success"); // od razu pokazujemy success
-      router.replace("/", {scroll: false}); // czyścimy adres
+      try {
+        updateOrderStatus(extOrderId as string);
+
+        setIsCartOpen(true);
+        setForceStep("success");
+        router.replace("/", {scroll: false});
+      } catch (error) {
+        console.error("Płatność nie dokonana", error);
+      }
     }
   }, [searchParams, router]);
 
@@ -45,15 +43,12 @@ const ShopMenu = () => {
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
+  const {cart: mongoCart} = useCart();
 
-  
-  const { cart: mongoCart } = useCart();
-  // const cartCount = reduxCartItems.reduce((sum, item) => sum + item.quantity, 0);
-    // const cartCount = localCartItems.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCount = user?._id
-    ? mongoCart.reduce((sum, item) => sum + item.quantity, 0) // jeśli zalogowany -> Mongo
+  const cartCount = user?._id
+    ? mongoCart.reduce((sum, item) => sum + item.quantity, 0)
     : reduxCartItems.reduce((sum, item) => sum + item.quantity, 0);
-  
+
   return (
     <>
       <div className={style.shopMenu}>
@@ -66,7 +61,6 @@ const ShopMenu = () => {
         isOpen={isCartOpen}
         closeModal={closeCart}
         forceStep={forceStep}
-      
       />
     </>
   );

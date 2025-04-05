@@ -13,6 +13,8 @@ import CartForm from "./steps/CartForm";
 import CartPayment from "./steps/CartPayment";
 import {useCart} from "../../context/CartContext";
 import {selectCartItems} from "../../redux/cart/selectors";
+import { createOrder } from "../../services/orderAPI";
+import { clearCartAPI } from "../../services/cartAPI";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -60,24 +62,30 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
   const {cart, fetchCart} = useCart();
 
   const products = user?._id ? cart : reduxCartItems;
+  const total = products.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  const shippingCost =
+    formData.shipping === "kurier"
+      ? 20
+      : formData.shipping === "paczkomat"
+      ? 15
+      : 0;
+
+  const finalTotal = total + shippingCost;
 
   const handlePay = async () => {
     try {
-      const response = await fetch("/api/payment/create-order", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          cart: products,
-          formData,
-          extOrderId,
-          userId: user?._id || null,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.redirectUri) window.location.href = data.redirectUri;
-      else toast.error("Nie udało się przekierować do płatności.");
+      const redirectUri = await createOrder(
+        products,
+        formData,
+        extOrderId,
+        user?._id || null,
+        shippingCost,
+      );
+      window.location.href = redirectUri;
     } catch (error) {
       toast.error("Błąd podczas tworzenia zamówienia.");
       console.error(error);
@@ -90,11 +98,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     setShow(false);
     if (user?._id) {
       try {
-        const res = await fetch("/api/user/cart/clear", {
-          method: "DELETE",
-        });
-
-        if (!res.ok) throw new Error();
+        await clearCartAPI();
         await fetchCart();
       } catch (err) {
         toast.error("Błąd podczas czyszczenia koszyka");
@@ -126,19 +130,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     if (!show) setIsRendered(false);
   };
 
-  const total = products.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  const shippingCost =
-    formData.shipping === "kurier"
-      ? 20
-      : formData.shipping === "paczkomat"
-      ? 15
-      : 0;
-
-  const finalTotal = total + shippingCost;
+  
 
   if (!isRendered) return null;
 
