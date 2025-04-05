@@ -1,32 +1,25 @@
-import { useState } from "react";
+import {useState} from "react";
 import styles from "./LoginForm.module.css";
+import {loginUser} from "../../services/authAPI";
 import { useUser } from "../../hooks/useUser";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const {user} = useUser();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate } = useUser();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (res.status === 200) {
-      setMessage("Logged in successfully!");
-      console.log("uS",user);
-      
-    } else {
-      setMessage(data.message || "Something went wrong!");
+    try {
+      setIsLoading(true);
+      await loginUser(email, password);
+      await mutate();
+    } catch (err: any) {
+      console.error("Nie można zalogować", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,10 +43,9 @@ export default function LoginForm() {
           required
         />
         <button className={styles.button} type="submit">
-          Login
+          {isLoading ? "Logowanie..." : "Zaloguj"}
         </button>
       </form>
-      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 }

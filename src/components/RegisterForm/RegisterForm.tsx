@@ -11,7 +11,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setIsRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const {user} = useUser();
+
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

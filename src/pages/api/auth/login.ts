@@ -5,12 +5,7 @@ import { serialize } from "cookie";
 
 import { User } from "@/models/User";
 import { connectToDatabase } from "../../../lib/mongoose";
-// // ⛔ zamień na pobieranie użytkownika z bazy danych
-// const MOCK_USER = {
-//   id: "123",
-//   email: "test@example.com",
-//   passwordHash: await bcrypt.hash("123456", 10),
-// };
+
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 

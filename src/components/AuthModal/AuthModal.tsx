@@ -14,7 +14,7 @@ const AuthModal = ({isOpen, closeModal}: AuthModalProps) => {
   const [isRegister, setIsRegister] = useState(true); // Stan przełączający formularz logowania / rejestracji
   const [show, setShow] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
-  const {user} = useUser();
+  const {isLoggedIn} = useUser();
 
   const escHandler = useCallback(
     (e: KeyboardEvent) => {
@@ -74,7 +74,7 @@ const AuthModal = ({isOpen, closeModal}: AuthModalProps) => {
         <button onClick={handleClose} className={style.closeButton}>
           X
         </button>
-        {user ? (
+        {isLoggedIn ? (
           <>
             <div style={{padding: "2rem"}}>
               <UserPanel />
