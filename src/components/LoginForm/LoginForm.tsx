@@ -16,8 +16,8 @@ export default function LoginForm() {
       setIsLoading(true);
       await loginUser(email, password);
       await mutate();
-    } catch (err: any) {
-      console.error("Nie można zalogować", err);
+    } catch  {
+      console.error("Nie można zalogować");
     } finally {
       setIsLoading(false);
     }

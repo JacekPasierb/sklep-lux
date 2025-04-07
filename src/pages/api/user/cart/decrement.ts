@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { User } from "@/models/User";
 import { parse } from "cookie";
 import jwt from "jsonwebtoken";
+import { CartItem } from "../../../../types/cart";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -24,14 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await User.findById(decoded.userId);
     if (!user) return res.status(404).json({ message: "Nie znaleziono użytkownika" });
 
-    const item = user.cart.find((item: any) => item.id === productId);
+    const item = user.cart.find((item: CartItem) => item.id === productId);
     if (!item) return res.status(404).json({ message: "Produkt nie znaleziony w koszyku" });
 
     if (item.quantity > 1) {
       item.quantity -= 1;
     } else {
       // Jeśli ilość = 1, to usuń z koszyka
-      user.cart = user.cart.filter((item: any) => item.id !== productId);
+      user.cart = user.cart.filter((item: CartItem) => item.id !== productId);
     }
 
     await user.save();

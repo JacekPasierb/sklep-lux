@@ -12,8 +12,12 @@ export const loginUser = async (email: string, password: string) => {
       if (!res.ok) throw new Error(data.message || "Błąd logowania");
   
       return data;
-    } catch (error: any) {
-      throw new Error(error.message || "Błąd logowania");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message || "Błąd logowania");
+      } else {
+        throw new Error("Błąd logowania");
+      }
     }
   };
   

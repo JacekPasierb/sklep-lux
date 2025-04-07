@@ -1,6 +1,5 @@
 "use client";
 import {useUser} from "@/hooks/useUser";
-import {useState} from "react";
 import styles from "./UserPanel.module.css";
 import {toast} from "react-toastify";
 

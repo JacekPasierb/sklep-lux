@@ -4,6 +4,7 @@ import type {NextApiRequest, NextApiResponse} from "next";
 import {v4 as uuidv4} from "uuid";
 import {connectToDatabase} from "../../../lib/mongoose";
 import {Order} from "../../../models/Order";
+import { CartItem } from "../../../types/cart";
 
 const PAYU_CLIENT_ID = process.env.PAYU_CLIENT_ID!;
 const PAYU_CLIENT_SECRET = process.env.PAYU_CLIENT_SECRET!;
@@ -23,7 +24,7 @@ export default async function handler(
     const extOrderId = uuidv4();
     await connectToDatabase();
     const totalAmount = cart.reduce(
-      (sum: number, item: any) => sum + item.price * item.quantity,
+      (sum: number, item: CartItem) => sum + item.price * item.quantity,
       0
     );
 
@@ -84,7 +85,7 @@ export default async function handler(
         firstName: formData.name,
         language: "pl",
       },
-      products: cart.map((item: any) => ({
+      products: cart.map((item: CartItem) => ({
         name: item.name,
         unitPrice: (item.price * 100).toString(),
         quantity: item.quantity,
