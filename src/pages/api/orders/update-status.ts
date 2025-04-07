@@ -4,7 +4,6 @@ import type {NextApiRequest, NextApiResponse} from "next";
 
 import {Order} from "../../../models/Order";
 import {connectToDatabase} from "../../../lib/mongoose";
-import {log} from "node:console";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +11,7 @@ export default async function handler(
 ) {
   if (req.method !== "POST") return res.status(405).end("Method not allowed");
 
-  const {extOrderId, status} = req.body;
+  const {extOrderId} = req.body;
   console.log("11status", extOrderId);
 
   if (!extOrderId) {

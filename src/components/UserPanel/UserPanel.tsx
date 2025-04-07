@@ -1,6 +1,6 @@
 "use client";
 import {useUser} from "@/hooks/useUser";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import styles from "./UserPanel.module.css";
 import {toast} from "react-toastify";
 
@@ -13,8 +13,8 @@ interface Order {
 
 export default function UserPanel() {
   const {user, logout} = useUser();
-  const [orders, setOrders] = useState<Order[]>([]);
-
+  // const [orders, setOrders] = useState<Order[]>([]);
+  const orders: Order[] = [];
   const handleLogout = async () => {
     await logout();
     toast.info("Zostałeś wylogowany");

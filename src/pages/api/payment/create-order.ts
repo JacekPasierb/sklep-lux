@@ -27,7 +27,7 @@ export default async function handler(
       0
     );
 
-    const newOrder = await Order.create({
+     await Order.create({
       userId: userId || null,
       extOrderId,
       products: cart,

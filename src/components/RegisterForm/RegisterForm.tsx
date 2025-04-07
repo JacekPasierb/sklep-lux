@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./RegisterForm.module.css";
-import { useUser } from "../../hooks/useUser";
 
 interface RegisterFormProps {
   setIsRegister: (value: boolean) => void;
