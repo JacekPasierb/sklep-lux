@@ -15,6 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { email, password } = req.body;
   await connectToDatabase();
   const user = await User.findOne({ email });
+  console.log("ss",user);
+  
   if (!user) return res.status(401).json({ message: "User not found" });
   const passwordMatch = await bcrypt.compare(password, user.passwordHash);
   if (!passwordMatch) return res.status(401).json({ message: "Invalid credentials" });
