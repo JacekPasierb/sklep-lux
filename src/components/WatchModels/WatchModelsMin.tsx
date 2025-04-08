@@ -7,7 +7,7 @@ import ProductCard from "../ProductCard/ProductCard";
 const WatchModelsMin = () => {
   return (
     <section id="Prosucts">
-      <h2 className={styles.title}>Ekskluzywne zegarki najnowsza kolekcja</h2>
+      <h2 className={styles.title}>Ekskluzywne zegarki najnowsza kolekcja1</h2>
       <div className={styles.productList}>
         <ProductCard
           imageSrc="/images/watch1.jpg"
@@ -30,35 +30,7 @@ const WatchModelsMin = () => {
           description="Solidny, wytrzymały model, idealny dla osób, które cenią niezawodność."
           price="3999 zł"
         />
-        {/* <div className={styles.productCard}>
-          <Image
-            src="/images/watch2.jpg"
-            alt="Luxury watch model"
-            width={500}
-            height={500}
-            sizes="(max-width: 991px) 100vw, 50vw"
-            className={styles.productImage}
-          />
-
-          <div className={styles.productDetails}>
-            <h3 className={styles.modelName}>model</h3>
-            <p className={styles.modelDetails}>
-              {" "}
-              Skóra naturalna, stal nierdzewna | Czarny | One Size
-            </p>
-            <p className={styles.productDescription}>
-              {" "}
-              Solidny, wytrzymały model, idealny dla osób, które cenią
-              niezawodność.
-            </p>
-            <div className={styles.priceAndButton}>
-              <span className={styles.price}>6999 zł</span>
-              <button className={styles.addToCartButton}>
-                Dodaj do koszyka
-              </button>
-            </div>
-          </div>
-        </div> */}
+      
       </div>
     </section>
   );
