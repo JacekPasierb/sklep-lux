@@ -87,7 +87,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
       );
       window.location.href = redirectUri;
     } catch (error) {
-      toast.error("Błąd podczas tworzenia zamówienia.");
+      toast.error(`Błąd podczas tworzenia zamówienia. ${error}`);
       console.error(error);
     }
   };
