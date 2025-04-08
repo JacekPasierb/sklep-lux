@@ -89,13 +89,14 @@ const CartForm = ({
         onChange={handleChange}
         required
       />
-
-      <NextBtn
-        text="Przejdź do podsumowania"
-        click={() => setStep("payment")}
-        type="button"
-      />
-      <BackBtn text="Wróć do Koszyka" click={() => setStep("cart")} />
+      <div className={styles.footer}>
+        <NextBtn
+          text="Przejdź do podsumowania"
+          click={() => setStep("payment")}
+          type="button"
+        />
+        <BackBtn text="Wróć do Koszyka" click={() => setStep("cart")} />
+      </div>
     </form>
   );
 };

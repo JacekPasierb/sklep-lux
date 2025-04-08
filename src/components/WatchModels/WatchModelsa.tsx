@@ -30,16 +30,15 @@ export const WatchModelsa = () => {
     price: number;
     image: string;
   }) => {
-
     if (!isLoggedIn) {
       dispatch(addToCart(product));
-      toast.success("Dodano produkt do lokalnego koszyka!");
+
       return;
     }
 
     try {
       await addProductToCart(product);
-      toast.success(`Dodano ${product.name} do koszyka!`);
+
       await fetchCart();
     } catch {
       toast.error("Błąd przy dodawaniu produktu");
@@ -59,11 +58,10 @@ export const WatchModelsa = () => {
         });
       },
       {
-        threshold: 0.6, 
+        threshold: 0.6,
       }
     );
 
-  
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
@@ -71,7 +69,6 @@ export const WatchModelsa = () => {
       }
     });
 
-    
     return () => {
       observer.disconnect();
     };

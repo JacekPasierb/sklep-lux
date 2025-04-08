@@ -31,18 +31,20 @@ const CartPayment = ({
     <div className={styles.paymentStep}>
       <div className={styles.shippingWrapper}>
         <h4 className={styles.sectionTitle}>Metoda dostawy</h4>
-
-        <label className={styles.radioLabel}>
-          <input
-            type="radio"
-            name="shipping"
-            value="kurier"
-            checked={formData.shipping === "kurier"}
-            onChange={handleChange}
-          />
-          Kurier (+20 zł)
-        </label>
-
+        <div className={styles.shipBox} >
+          <label className={styles.radioLabel}>
+            <input
+              type="radio"
+              name="shipping"
+              value="kurier"
+              checked={formData.shipping === "kurier"}
+              onChange={handleChange}
+            />
+            Kurier 
+          </label>
+          <p>20 zł</p>
+        </div>
+        <div className={styles.shipBox} >
         <label className={styles.radioLabel}>
           <input
             type="radio"
@@ -51,9 +53,10 @@ const CartPayment = ({
             checked={formData.shipping === "paczkomat"}
             onChange={handleChange}
           />
-          Paczkomat (+15 zł)
+          Paczkomat 
         </label>
-
+        <p>15 zł</p></div>
+        <div className={styles.shipBox} >
         <label className={styles.radioLabel}>
           <input
             type="radio"
@@ -62,20 +65,28 @@ const CartPayment = ({
             checked={formData.shipping === "odbior"}
             onChange={handleChange}
           />
-          Odbiór osobisty (0 zł)
-        </label>
+          Odbiór osobisty 
+        </label>  <p>0 zł</p></div>
       </div>
+      <div className={styles.footer}>
+        <div className={styles.footerPrice}>
+          <p>Suma produktów</p>
+          <p> {total.toFixed(2)} zł</p>
+        </div>
+        <div className={styles.footerPrice}>
+          <p>Dostawa</p>
+          <p> {shippingCost.toFixed(2)} zł</p>
+        </div>
+        <div className={styles.footerPrice}>
+          <p>Razem</p>
+          <p> {finalTotal.toFixed(2)} zł</p>
+        </div>
 
-      <div className={styles.summary}>
-        <p>Suma produktów: {total} zł</p>
-        <p>Dostawa: {shippingCost} zł</p>
-        <p>
-          <strong>Razem: {finalTotal} zł</strong>
-        </p>
+        <>
+          <NextBtn text="Zamawiam i płacę" click={handlePay} type="submit" />
+          <BackBtn text="Wstecz" click={() => setStep("form")} />
+        </>
       </div>
-
-      <NextBtn text="Zamawiam i płacę" click={handlePay} type="submit" />
-      <BackBtn text="Wstecz" click={() => setStep("form")} />
     </div>
   );
 };

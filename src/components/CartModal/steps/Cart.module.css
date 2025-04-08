@@ -1,3 +1,11 @@
+.cardBox {
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
 .empty {
   text-align: center;
   font-style: italic;
@@ -72,11 +80,9 @@
 
 .quantityControls {
   display: flex;
-  align-items: center;
+
   gap: 6px;
 }
-
-
 
 .removeBtn {
   background: none;
@@ -91,11 +97,22 @@
   color: red;
 }
 
-
 .footer {
   margin-top: 20px;
-  text-align: center;
+  text-align: left;
   color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid #c29d5d;
+  padding: 1rem;
+}
+
+.footerPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .footer p {
@@ -103,38 +120,37 @@
   margin-bottom: 16px;
 }
 
-
 .checkout {
-    background-color: #c29d5d;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    transition: background-color 0.2s ease;
-  }
-  
-  .checkout:hover {
-    background-color: #af8e4d;
-  }
+  background-color: #c29d5d;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
+}
 
-  .clear {
-    background-color: transparent;
-    color: #c29d5d;
-    border: 1px solid #c29d5d;
-    padding: 8px;
-    width: 100%;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-  
-  .clear:hover {
-    background-color: #c29d5d;
-    color: white;
-  }
+.checkout:hover {
+  background-color: #af8e4d;
+}
+
+.clear {
+  background-color: transparent;
+  color: #c29d5d;
+  border: 1px solid #c29d5d;
+  padding: 8px;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.clear:hover {
+  background-color: #c29d5d;
+  color: white;
+}

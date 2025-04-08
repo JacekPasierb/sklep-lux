@@ -13,8 +13,8 @@ import CartForm from "./steps/CartForm";
 import CartPayment from "./steps/CartPayment";
 import {useCart} from "../../context/CartContext";
 import {selectCartItems} from "../../redux/cart/selectors";
-import { createOrder } from "../../services/orderAPI";
-import { clearCartAPI } from "../../services/cartAPI";
+import {createOrder} from "../../services/orderAPI";
+import {clearCartAPI} from "../../services/cartAPI";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -83,7 +83,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
         formData,
         extOrderId,
         user?._id || null,
-        shippingCost,
+        shippingCost
       );
       window.location.href = redirectUri;
     } catch (error) {
@@ -130,8 +130,6 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
     if (!show) setIsRendered(false);
   };
 
-  
-
   if (!isRendered) return null;
 
   return (
@@ -140,6 +138,7 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
         className={`${styles.modalContent} ${show ? styles.open : ""}`}
         onTransitionEnd={handleTransitionEnd}
       >
+        <div className={styles.accountData}><p>Witaj {user ? user.username : "Gościu" }</p></div>
         <button onClick={closeModal} className={styles.closeButton}>
           X
         </button>
@@ -148,7 +147,9 @@ const CartModal = ({isOpen, closeModal, forceStep}: CartModalProps) => {
           {step === "form" && "Dane do zamówienia"}
           {step === "payment" && "Podsumowanie"}
         </h2>
-
+        <div
+          style={{width: "100%", height: "5px", backgroundColor: "#c29d5d"}}
+        ></div>
         {step === "cart" && (
           <Cart setStep={setStep} total={total} cartItems={products} />
         )}

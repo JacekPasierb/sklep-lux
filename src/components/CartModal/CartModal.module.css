@@ -37,6 +37,13 @@
   color: #fff;
 }
 
+.accountData {
+position: absolute;
+top: 10px;
+left: 10px;
+color: #fff;
+}
+
 .title {
   font-size: 1.6rem;
   text-align: center;
@@ -50,6 +57,8 @@
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
+  position: relative;
+  height: 100vh;
 }
 
 .form input {
@@ -66,6 +75,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100vh;
+  position: relative;
 }
 
 .shippingWrapper {
@@ -131,4 +142,38 @@
   margin-bottom: 16px;
   text-align: center;
   color: #fff;
+}
+
+
+.footer {
+  margin-top: 20px;
+  text-align: left;
+  color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid #c29d5d;
+  padding: 1rem;
+}
+
+.footerPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footer p {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.shipBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shipBox p {
+  font-size: 0.95rem;
+  color: white;
 }
