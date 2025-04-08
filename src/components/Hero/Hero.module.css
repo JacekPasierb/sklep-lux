@@ -12,7 +12,7 @@
 
   /* Tło: zdjęcie luksusowego produktu */
   background-image: url("/images/hero.jpg");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-attachment: scroll;
 }
