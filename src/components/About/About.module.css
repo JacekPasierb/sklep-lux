@@ -86,7 +86,7 @@
 }
 
 .text {
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-playfair);
   font-size: 0.65rem;
   color: #444;
   line-height: 1.6;

@@ -24,6 +24,7 @@ export const Hero = () => {
       >
         Wyjątkowe produkty dla ludzi z klasą
       </motion.p>
+      <a href='#Products'>
       <motion.button
         className={styles.ctaButton}
         initial={{ opacity: 0, scale: 0.8 }}
@@ -31,7 +32,7 @@ export const Hero = () => {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         Odkryj Kolekcję
-      </motion.button>
+      </motion.button></a>
     </section>
   );
 };

@@ -15,12 +15,14 @@
 }
 
 .formTitle {
+  font-family: var(--font-playfair);
   font-size: 1.5rem;
   margin-bottom: 20px;
   color: #333;
 }
 
 .formDescription {
+  font-family: var(--font-playfair);
   font-size: 0.8rem;
   color: #666;
   margin-bottom: 30px;
@@ -36,7 +38,7 @@
 .inputField {
   padding: 12px;
   font-size: 0.8rem;
-
+font-family: var(--font-playfair);
   border: 1px solid #ccc;
 }
 
@@ -46,6 +48,7 @@
   padding: 12px;
   border: 1px solid #c29d5d;
 
+  font-family: var(--font-playfair);
   font-size: 0.8rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
