@@ -12,7 +12,7 @@ const PAYU_POS_ID = process.env.PAYU_POS_ID!;
 const PAYU_AUTH_URL =
   "https://secure.snd.payu.com/pl/standard/user/oauth/authorize";
 const PAYU_ORDER_URL = "https://secure.snd.payu.com/api/v2_1/orders";
-
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -77,8 +77,8 @@ export default async function handler(
       currencyCode: "PLN",
       totalAmount: (totalAmount * 100 + shippingCost * 100).toString(),
       extOrderId: uuidv4(), // unikalne ID zamówienia
-      continueUrl: `http://localhost:3000?payment=success&order=${extOrderId}`,
-      notifyUrl: "http://localhost:3000/api/payment/notify",
+      continueUrl: `${SITE_URL}?payment=success&order=${extOrderId}`,
+      notifyUrl: `${SITE_URL}/api/payment/notify`,
       buyer: {
         email: formData.email,
         phone: formData.phone,
