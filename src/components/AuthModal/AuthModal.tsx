@@ -79,7 +79,7 @@ const AuthModal = ({isOpen, closeModal}: AuthModalProps) => {
             <div style={{padding: "2rem"}}>
               <UserPanel />
             </div>
-          </>
+          </> 
         ) : (
           <>
             <h2>{isRegister ? "Utwórz Konto" : "Logowanie"}</h2>
