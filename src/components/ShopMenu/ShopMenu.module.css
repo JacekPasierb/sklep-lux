@@ -1,48 +1,57 @@
 .shopMenu {
-    background-color: #b9b9b94d;
-    padding: 0.5rem;
-    border-radius: 8px;
-    backdrop-filter: blur(5px);
-    align-items: center;
-    position: fixed;
-    z-index: 1000;
-    top: 2rem;
-    right: 0;
-  
-    width: 80px;
-  
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: space-between;
-  }
+  background-color: #b9b9b94d;
+  padding: 0.5rem;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  top: 2rem;
+  right: 0;
 
-  .icon {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #000000;
-    transition: transform 0.2s ease;
-  }
-  
-  .icon:hover {
-    transform: scale(1.1);
-  }
-  
+  width: 80px;
 
-  .iconWrapper {
-    position: relative;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+}
 
-  .badge {
-    position: absolute;
-    top: -6px;
-    right: 0px;
-    background-color: #c29d5d;
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 999px;
-    font-weight: bold;
-    min-width: 18px;
-    text-align: center;
+.icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #000000;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.iconWrapper {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: 0px;
+  background-color: #c29d5d;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+}
+
+@media screen and (min-width: 1600px) {
+  .shopMenu {
+    top: unset;
+    bottom: 2rem;
+    left: 30%;
+    transform: translateX(-70%);
+    flex-direction: row;
   }
+}

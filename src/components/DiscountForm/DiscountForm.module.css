@@ -6,6 +6,7 @@
   align-items: center;
   text-align: center;
   border-top: 1px solid rgba(180, 180, 180, 0.443);
+ 
 }
 
 .formWrapper {
@@ -38,8 +39,13 @@
 .inputField {
   padding: 12px;
   font-size: 0.8rem;
-font-family: var(--font-playfair);
+  font-family: var(--font-playfair);
   border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.inputError {
+  border-color: red;
 }
 
 .submitButton {
@@ -69,6 +75,12 @@ font-family: var(--font-playfair);
   color: green;
   font-size: 1rem;
   margin-top: 10px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 @media screen and (min-width: 480px) and (max-width: 768px) {

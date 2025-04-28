@@ -1,51 +1,10 @@
 "use client";
 
-import {useState} from "react";
+import {Formik, Form, Field} from "formik";
+import * as Yup from "yup";
 import styles from "./DiscountForm.module.css";
 
-interface FormErrors {
-  name?: string;
-  email?: string;
-}
-
 const DiscountForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const validate = () => {
-    const errors: FormErrors = {};
-    if (!formData.name) {
-      errors.name = "Imię jest wymagane";
-    }
-    if (!formData.email) {
-      errors.email = "E-mail jest wymagany";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Podaj poprawny adres e-mail";
-    }
-    return errors;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formErrors = validate();
-    setErrors(formErrors);
-    if (Object.keys(formErrors).length === 0) {
-      alert("Formularz wysłany");
-      // Prześlij dane na backend lub do systemu
-    }
-  };
-
   return (
     <section className={styles.discountSection}>
       <div className={styles.formWrapper}>
@@ -54,35 +13,62 @@ const DiscountForm = () => {
           Za zapis na newsletter otrzymasz 5% zniżki na pierwsze zakupy oraz
           jako pierwszy(a) dowiesz się o nowościach i promocjach.
         </p>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Wprowadź swoje imię"
-            value={formData.name}
-            onChange={handleChange}
-            className={styles.inputField}
-          />
-          {errors.name && (
-            <div className={styles.errorMessage}>{errors.name}</div>
-          )}
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Wprowadź swój e-mail"
-            value={formData.email}
-            onChange={handleChange}
-            className={styles.inputField}
-          />
-          {errors.email && (
-            <div className={styles.errorMessage}>{errors.email}</div>
-          )}
+        <Formik
+          initialValues={{name: "", email: ""}}
+          validationSchema={Yup.object({
+            name: Yup.string().required("Imię jest wymagane"),
+            email: Yup.string()
+              .email("Podaj poprawny adres e-mail")
+              .required("E-mail jest wymagany"),
+          })}
+          onSubmit={(values, {resetForm}) => {
+            alert("Formularz wysłany");
+            resetForm();
+          }}
+        >
+          {({errors, touched, isSubmitting}) => (
+            <Form className={styles.form}>
+              <div className={styles.inputGroup}>
+                <Field
+                  type="text"
+                  name="name"
+                  placeholder={
+                    touched.name && errors.name
+                      ? errors.name
+                      : "Wprowadź swoje imię"
+                  }
+                  className={`${styles.inputField} ${
+                    errors.name && touched.name ? styles.inputError : ""
+                  }`}
+                />
+              </div>
 
-          <button type="submit" className={styles.submitButton}>
-            Zapisz się
-          </button>
-        </form>
+              <div className={styles.inputGroup}>
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder={
+                    touched.email && errors.email
+                      ? errors.email
+                      : "Wprowadź swój e-mail"
+                  }
+                  className={`${styles.inputField} ${
+                    errors.email && touched.email ? styles.inputError : ""
+                  }`}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={styles.submitButton}
+                disabled={isSubmitting}
+              >
+                Zapisz się
+              </button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </section>
   );

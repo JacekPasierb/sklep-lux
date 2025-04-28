@@ -4,7 +4,7 @@ import styles from "./About.module.css";
 import {motion} from "framer-motion";
 import Image from "next/image";
 
-const About = () => {
+export const About = () => {
   return (
     <section className={styles.about} id="About">
       <motion.div
@@ -41,5 +41,3 @@ const About = () => {
     </section>
   );
 };
-
-export default About;

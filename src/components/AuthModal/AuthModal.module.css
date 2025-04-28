@@ -60,3 +60,17 @@
   font-size: 0.9rem;
   margin-top: 10px;
 }
+
+@media (min-width: 1600px) {
+  .modal {
+    justify-content: center;
+    align-items: center;
+  }
+  .modalContent {
+    width: 400px;
+    height: 70vh;
+    top: auto;
+    left: auto;
+    margin: auto;
+  }
+}

@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <p className={styles.modelDetails}>{modelDetails}</p>
         <p className={styles.productDescription}>{description}</p>
         <div className={styles.priceAndButton}>
-          <span className={styles.price}>{price}</span>
+          <span className={styles.price}>{price} zł</span>
           <button
             className={styles.addToCartButton}
             onClick={() =>

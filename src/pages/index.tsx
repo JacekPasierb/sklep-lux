@@ -1,7 +1,7 @@
 "use client";
 
 import {useMediaQuery} from "@react-hook/media-query";
-import About from "../components/About/About";
+import {About} from "../components/About/About";
 import DiscountForm from "../components/DiscountForm/DiscountForm";
 import Footer from "../components/Footer/Footer";
 import {Hero} from "../components/Hero/Hero";

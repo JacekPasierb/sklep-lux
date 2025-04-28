@@ -38,10 +38,10 @@
 }
 
 .accountData {
-position: absolute;
-top: 10px;
-left: 10px;
-color: #fff;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #fff;
 }
 
 .title {
@@ -144,7 +144,6 @@ color: #fff;
   color: #fff;
 }
 
-
 .footer {
   margin-top: 20px;
   text-align: left;
@@ -176,4 +175,18 @@ color: #fff;
 .shipBox p {
   font-size: 0.95rem;
   color: white;
+}
+
+@media (min-width: 1600px) {
+  .modal {
+    justify-content: center;
+    align-items: center;
+  }
+  .modalContent {
+    width: 400px;
+    height: 70vh;
+    top: auto;
+    left: auto;
+    margin: auto;
+  }
 }

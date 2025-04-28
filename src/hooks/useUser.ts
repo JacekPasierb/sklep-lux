@@ -14,7 +14,7 @@ export function useUser() {
     revalidateIfStale: false, // nie re-fetchuj jak dane są stare
   });
 
-  // ⛔ Dodajemy funkcję logout
+  //  Dodajemy funkcję logout
   const logout = async () => {
     await fetch("/api/auth/logout");
     mutate(null); // Reset danych użytkownika

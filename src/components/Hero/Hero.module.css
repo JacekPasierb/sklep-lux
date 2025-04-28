@@ -10,14 +10,12 @@
   text-align: center;
   padding: 0;
 
-  /* Tło: zdjęcie luksusowego produktu */
   background-image: url("/images/hero.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: scroll;
 }
 
-/* Gradient Overlay dla lepszego kontrastu */
 .hero::before {
   content: "";
   position: absolute;
@@ -30,7 +28,6 @@
   z-index: 1;
 }
 
-/* Efekt ziarna */
 .hero::after {
   content: "";
   position: absolute;
@@ -44,7 +41,6 @@
   z-index: 2;
 }
 
-/* Tekst musi być nad gradientem i ziarnem */
 .title,
 .subtitle {
   position: relative;
@@ -69,7 +65,6 @@
   margin-top: 1rem;
 }
 
-/* Przycisk CTA */
 .ctaButton {
   margin-top: 1.5rem;
   padding: 12px 24px;
@@ -98,5 +93,12 @@
   }
   .subtitle {
     font-size: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .hero {
+    max-width: 1600px;
+    margin: 0 auto;
   }
 }

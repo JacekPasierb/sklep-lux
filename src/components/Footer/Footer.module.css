@@ -3,6 +3,9 @@
   flex-direction: column;
   padding: 50px 20px;
   padding-bottom: 200px;
+  max-width: 1200px;
+  margin: 0 auto;
+
 }
 
 .logo {

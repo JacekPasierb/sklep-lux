@@ -10,9 +10,16 @@ import {useDispatch} from "react-redux";
 import {addToCart} from "../../redux/cart/cartSlice";
 import {useCart} from "../../context/CartContext";
 import {addProductToCart} from "../../services/cartAPI";
+import {watchesData} from "../../data/watchesData";
+
+type SectionId = "time1" | "time2" | "time3";
 
 export const WatchModelsa = () => {
-  const sectionIds = useMemo(() => ["time1", "time2", "time3"], []);
+  const sectionIds: SectionId[] = useMemo(
+    () => ["time1", "time2", "time3"],
+    []
+  );
+
   const activeId = useScrollSpy(sectionIds);
   const [visible, setVisible] = useState({
     time1: false,
@@ -32,13 +39,11 @@ export const WatchModelsa = () => {
   }) => {
     if (!isLoggedIn) {
       dispatch(addToCart(product));
-
       return;
     }
 
     try {
       await addProductToCart(product);
-
       await fetchCart();
     } catch {
       toast.error("Błąd przy dodawaniu produktu");
@@ -49,7 +54,7 @@ export const WatchModelsa = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const id = entry.target.id;
+          const id = entry.target.id as SectionId;
           if (entry.isIntersecting) {
             setVisible((prev) => ({...prev, [id]: true}));
           } else {
@@ -74,8 +79,14 @@ export const WatchModelsa = () => {
     };
   }, [sectionIds]);
 
+  // Mapa activeId na indeks zegarka w watchesData
+  const activeIndex = sectionIds.indexOf(activeId as SectionId);
+
+  const activeWatch = watchesData[activeIndex];
+
   return (
     <section className={styles.section} id="Products">
+      <div style={{maxWidth:"1200px", margin:"4rem auto"}}>
       <div className={`${styles.contentWrapper} ${styles.flexDirection}`}>
         <div className={styles.leftWrapper}>
           <div className={styles.stickyContentWrapper}>
@@ -84,263 +95,101 @@ export const WatchModelsa = () => {
             </h2>
             <div className={styles.stickyNavWrapper}>
               <div className={styles.navLine}>
-                <div
-                  className={`${styles.navLineOrange} ${
-                    activeId === "time1" ? styles.navLineActive : ""
-                  }`}
-                ></div>
-                <div
-                  className={`${styles.navLineOrange} ${
-                    activeId === "time2" ? styles.navLineActive : ""
-                  }`}
-                ></div>
-                <div
-                  className={`${styles.navLineOrange} ${
-                    activeId === "time3" ? styles.navLineActive : ""
-                  }`}
-                ></div>
+                {sectionIds.map((id) => (
+                  <div
+                    key={id}
+                    className={`${styles.navLineOrange} ${
+                      activeId === id ? styles.navLineActive : ""
+                    }`}
+                  ></div>
+                ))}
               </div>
               <div className={styles.navLineLinkWrapper}>
-                <a
-                  href="#time1"
-                  className={styles.navLineLink}
-                  style={{
-                    opacity: activeId === "time1" ? 1 : 0.5,
-                  }}
-                >
-                  <span className={styles.numberMenu}>LuxeNova</span>
-                </a>
-                <a
-                  href="#time2"
-                  className={styles.navLineLink}
-                  style={{
-                    opacity: activeId === "time2" ? 1 : 0.5,
-                  }}
-                >
-                  <span className={styles.numberMenu}>Prestige</span>
-                </a>
-                <a
-                  href="#time3"
-                  className={styles.navLineLink}
-                  style={{
-                    opacity: activeId === "time3" ? 1 : 0.5,
-                  }}
-                >
-                  <span className={styles.numberMenu}>Titan</span>
-                </a>
+                {watchesData.map((watch, index) => (
+                  <a
+                    key={watch.modelName}
+                    href={`#${sectionIds[index]}`}
+                    className={styles.navLineLink}
+                    style={{opacity: activeId === sectionIds[index] ? 1 : 0.5}}
+                  >
+                    <span className={styles.numberMenu}>{watch.modelName}</span>
+                  </a>
+                ))}
               </div>
             </div>
 
-            {(() => {
-              switch (activeId) {
-                case "time1":
-                  return (
-                    <div
-                      className={`${styles.contentTitleWrapper} ${styles.z1}`}
-                      style={{
-                        opacity: activeId === "time1" ? 1 : 1,
-                      }}
+            {activeWatch && (
+              <div
+                className={`${styles.contentTitleWrapper} ${styles.z1}`}
+                style={{opacity: 1}}
+              >
+                <div
+                  className={`${styles.cardContent} ${
+                    visible[sectionIds[activeIndex]] ? styles.visible : ""
+                  }`}
+                >
+                  <p className={styles.paragraph}>{activeWatch.details}</p>
+                  <p className={styles.paragraphDesc}>
+                    {activeWatch.description}
+                  </p>
+                  <div className={styles.cardAction}>
+                    <div className={styles.price}>{activeWatch.price} zł</div>
+                    <button
+                      className={styles.egeonCartButton}
+                      onClick={() =>
+                        handleAddToCart({
+                          id: `watch${activeIndex + 1}`,
+                          name: activeWatch.modelName,
+                          price: Number(activeWatch.price),
+                          image: activeWatch.img,
+                        })
+                      }
                     >
-                      <div
-                        className={`${styles.cardContent} ${
-                          visible.time1 ? styles.visible : ""
-                        }`}
+                      <span>Dodaj do koszyka</span>
+                      <svg
+                        className={styles.arrowIcon}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
-                        <p className={styles.paragraph}>
-                          Skóra naturalna, stal nierdzewna | Czarny | One Size
-                        </p>
-                        <p className={styles.paragraphDesc}>
-                          Nowoczesny luksus, łączący elegancję z nowatorskim
-                          designem.
-                        </p>
-                        <div className={styles.cardAction}>
-                          <div className={styles.price}>1999 zł</div>
-                          <button
-                            className={styles.egeonCartButton}
-                            onClick={() =>
-                              handleAddToCart({
-                                id: "watch1",
-                                name: "LuxeNova",
-                                price: 1999,
-                                image: "/images/watch1.jpg",
-                              })
-                            }
-                          >
-                            <span>Dodaj do koszyka</span>
-                            <svg
-                              className={styles.arrowIcon}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                              <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                case "time2":
-                  return (
-                    <div
-                      className={`${styles.contentTitleWrapper} ${styles.z1}`}
-                      style={{
-                        opacity: activeId === "time2" ? 1 : 1,
-                      }}
-                    >
-                      <div
-                        className={`${styles.cardContent} ${
-                          visible.time2 ? styles.visible : ""
-                        }`}
-                      >
-                        <p className={styles.paragraph}>
-                          Skóra naturalna, stal nierdzewna | Czarny | One Size
-                        </p>
-                        <p className={styles.paragraphDesc}>
-                          Czysty, klasyczny styl, odpowiedni dla osób, które
-                          cenią subtelny luksus.
-                        </p>
-                        <div className={styles.cardAction}>
-                          <div className={styles.price}>4999 zł</div>
-                          <button
-                            className={styles.egeonCartButton}
-                            onClick={() =>
-                              handleAddToCart({
-                                id: "watch2",
-                                name: "Prestige",
-                                price: 4999,
-                                image: "/images/watch2.jpg",
-                              })
-                            }
-                          >
-                            <span>Dodaj do koszyka</span>
-                            <svg
-                              className={styles.arrowIcon}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                              <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                case "time3":
-                  return (
-                    <div
-                      className={`${styles.contentTitleWrapper} ${styles.z1}`}
-                      style={{
-                        opacity: activeId === "time3" ? 1 : 1,
-                      }}
-                    >
-                      <div
-                        className={`${styles.cardContent} ${
-                          visible.time3 ? styles.visible : ""
-                        }`}
-                      >
-                        <p className={styles.paragraph}>
-                          Skóra naturalna, stal nierdzewna | Czarny | One Size
-                        </p>
-                        <p className={styles.paragraphDesc}>
-                          Solidny, wytrzymały model, idealny dla osób, które
-                          cenią niezawodność.
-                        </p>
-                        <div className={styles.cardAction}>
-                          <div className={styles.price}>6999 zł</div>
-                          <button
-                            className={styles.egeonCartButton}
-                            onClick={() =>
-                              handleAddToCart({
-                                id: "watch3",
-                                name: "Titan",
-                                price: 6999,
-                                image: "/images/watch3.jpg",
-                              })
-                            }
-                          >
-                            <span>Dodaj do koszyka</span>
-                            <svg
-                              className={styles.arrowIcon}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                              <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                default:
-                  return;
-              }
-            })()}
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 19" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         <div className={styles.rightWrapper}>
-          <section className={styles.imgWrapper} id="time1">
-            <div className={styles.paralaxWrapper}>
-              <Image
-                src="/images/watch1.jpg"
-                alt="Luxury watch model"
-                width={500}
-                height={500}
-                sizes="(max-width: 991px) 100vw, 50vw"
-                className={styles.contentImg}
-              />
-            </div>
-          </section>
-          <section className={styles.imgWrapper} id="time2">
-            <div className={styles.paralaxWrapper}>
-              <Image
-                src="/images/watch2.jpg"
-                alt="Luxury watch model"
-                width={500}
-                height={500}
-                sizes="(max-width: 991px) 100vw, 50vw"
-                className={styles.contentImg}
-              />
-            </div>
-          </section>
-          <section className={styles.imgWrapper} id="time3">
-            <div className={styles.paralaxWrapper}>
-              <Image
-                src="/images/watch3.jpg"
-                alt="Luxury watch model"
-                width={500}
-                height={500}
-                sizes="(max-width: 991px) 100vw, 50vw"
-                className={styles.contentImg}
-              />
-            </div>
-          </section>
+          {watchesData.map((watch, index) => (
+            <section
+              className={styles.imgWrapper}
+              id={sectionIds[index]}
+              key={watch.modelName}
+            >
+              <div className={styles.paralaxWrapper}>
+                <Image
+                  src={watch.img}
+                  alt={watch.modelName}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 991px) 100vw, 50vw"
+                  className={styles.contentImg}
+                />
+              </div>
+            </section>
+          ))}
         </div>
-      </div>
+      </div></div>
     </section>
   );
 };

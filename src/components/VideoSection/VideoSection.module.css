@@ -3,6 +3,8 @@
     width: 100%;
     height: 100vh; /* wysokość na pełny ekran, dostosuj w razie potrzeby */
     overflow: hidden;
+    max-width: 1600px;
+    margin: 0 auto;
   }
   
   .videoWrapper {

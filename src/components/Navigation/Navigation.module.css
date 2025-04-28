@@ -7,9 +7,12 @@
   position: fixed;
   z-index: 1000;
   bottom: 2rem;
-  right: 2rem;
 
-  width: 80vw;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 90vw;
+  max-width: 800px;
 
   display: flex;
   flex-direction: column;
