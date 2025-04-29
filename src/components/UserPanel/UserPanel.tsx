@@ -12,7 +12,6 @@ interface Order {
 
 export default function UserPanel() {
   const {user, logout} = useUser();
-  // const [orders, setOrders] = useState<Order[]>([]);
   const orders: Order[] = [];
   const handleLogout = async () => {
     await logout();

@@ -11,7 +11,7 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({isOpen, closeModal}: AuthModalProps) => {
-  const [isRegister, setIsRegister] = useState(true); // Stan przełączający formularz logowania / rejestracji
+  const [isRegister, setIsRegister] = useState(true); 
   const [show, setShow] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
   const {isLoggedIn} = useUser();
