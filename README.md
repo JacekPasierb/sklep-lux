@@ -1,37 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏍️ Sklep-Lux – A modern eCommerce App built with Next.js
 
-## Getting Started
+[Live demo on Netlify](https://sklep-lux.netlify.app/)
 
-First, run the development server:
+**Sklep-Lux** to nowoczesna aplikacja eCommerce stworzona w **Next.js**, wspierająca logowanie JWT, integrację z MongoDB i systemem płatności PayU. Obsługuje koszyk, logowanie, historię zamówień, dynamiczne API i optymalizację SEO.
+
+---
+
+## 🚀 Tech Stack
+
+* **Next.js 15** (App Router, Server Actions, Turbopack)
+* **TypeScript**
+* **MongoDB** (Mongoose)
+* **JWT** (httpOnly cookies)
+* **PayU Sandbox**
+* **Redux Toolkit + Persist**
+* **Framer Motion**
+* **Docker & Docker Compose**
+
+---
+
+## 🧪 Funkcjonalności
+
+* ✅ Rejestracja i logowanie JWT
+* ✅ Koszyk dla gościa i zalogowanego użytkownika
+* ✅ Historia zamówień (dla zalogowanych)
+* ✅ Płatności testowe (PayU)
+* ✅ Backend API w Next.js (API Routes)
+* ✅ MongoDB z danymi użytkowników i zamówień
+* ✅ Obsługa `.env.local`
+* ✅ Obsługa przez Docker Compose
+
+---
+
+## 📆 Uruchomienie projektu
+
+### Lokalnie (bez Dockera)
 
 ```bash
+git clone https://github.com/twoj-user/sklep-lux.git
+cd sklep-lux
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Otwórz [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Przez Docker Compose
 
-## Learn More
+```bash
+git clone https://github.com/twoj-user/sklep-lux.git
+cd sklep-lux
+cp .env.example .env.local
+docker compose up --build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Otwórz: [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔐 Zmienne środowiskowe
 
-## Deploy on Vercel
+Stwórz plik `.env.local` na podstawie `.env.example`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```env
+MONGO_URI=mongodb+srv://...
+JWT_SECRET=...
+PAYU_CLIENT_ID=...
+PAYU_CLIENT_SECRET=...
+PAYU_POS_ID=...
+PAYU_SECOND_KEY=...
+NEXT_PUBLIC_DOMAIN=http://localhost:3000
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# sklep-lux
+> Uwaga: **nie umieszczaj pliku `.env.local` w repozytorium!**
+
+---
+
+## 🛫 Deployment
+
+Aplikacja jest dostępna online:
+**[https://sklep-lux.netlify.app](https://sklep-lux.netlify.app)**
+
+---
+
+## 🧠 Autor
+
+Projekt stworzony przez **Jacek Pasierb** – Fullstack Developer
+
+* Portfolio: [twoja-strona.pl](https://twoja-strona.pl)
+* LinkedIn: [linkedin.com/in/twoj-link](https://linkedin.com/in/twoj-link)
+
+---
+
+## ✨ Status projektu
+
+Projekt aktywny i rozwijany. W planach m.in.:
+
+* Podpięcie CMS do zarządzania treściami
+* Rozszerzenie o panelem admina
+* Eksport zamówień do CSV / PDF
+* Pełna optymalizacja Core Web Vitals
