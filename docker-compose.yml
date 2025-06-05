@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  sklep:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb+srv://Sklep-Lux:sklep-lux@cluster0.dv9rrov.mongodb.net/Sklep-Lux?retryWrites=true&w=majority&appName=Cluster0
