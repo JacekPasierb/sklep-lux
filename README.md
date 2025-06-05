@@ -37,10 +37,9 @@
 ### Lokalnie (bez Dockera)
 
 ```bash
-git clone https://github.com/twoj-user/sklep-lux.git
+git clone https://github.com/JacekPasierb/sklep-lux.git
 cd sklep-lux
 npm install
-cp .env.example .env.local
 npm run dev
 ```
 
@@ -51,9 +50,8 @@ Otwórz [http://localhost:3000](http://localhost:3000)
 ### Przez Docker Compose
 
 ```bash
-git clone https://github.com/twoj-user/sklep-lux.git
+git clone https://github.com/JacekPasierb/sklep-lux.git
 cd sklep-lux
-cp .env.example .env.local
 docker compose up --build
 ```
 
@@ -76,9 +74,6 @@ NEXT_PUBLIC_DOMAIN=http://localhost:3000
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-> Uwaga: **nie umieszczaj pliku `.env.local` w repozytorium!**
-
----
 
 ## 🛫 Deployment
 
@@ -91,8 +86,8 @@ Aplikacja jest dostępna online:
 
 Projekt stworzony przez **Jacek Pasierb** – Fullstack Developer
 
-* Portfolio: [twoja-strona.pl](https://twoja-strona.pl)
-* LinkedIn: [linkedin.com/in/twoj-link](https://linkedin.com/in/twoj-link)
+* Portfolio: [twoja-strona.pl](https://jacekpasierb.netlify.app/)
+* LinkedIn: [linkedin.com/in/jacek-pasierb](www.linkedin.com/in/jacek-pasierb)
 
 ---
 
